@@ -2,6 +2,8 @@
 
 > Synchronises feathers services with vue objects, updated in real time
 
+[![Build Status](https://travis-ci.org/t2t2/vue-syncers-feathers.svg?branch=master)](https://travis-ci.org/t2t2/vue-syncers-feathers)
+
 ## Setup
 
 ### Webpack/Browserify

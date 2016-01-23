@@ -69,14 +69,14 @@ test('Undefined items set null and send error', async t => {
 		},
 	})
 
-	t.plan(5)
+	t.plan(4)
 
 	instance.$once('syncer-error', (path, error) => {
 		t.is(path, 'test')
 		t.ok(error)
 	})
 
-	await t.throws(syncer.ready())
+	await syncer.ready()
 
 	t.notOk(syncer.loading)
 	t.same(syncer.state, null)

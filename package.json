@@ -27,6 +27,7 @@
     "feathersjs"
   ],
   "author": "t2t2 <taavot@gmail.com>",
+  "repository": "t2t2/vue-syncers-feathers",
   "dependencies": {
     "lodash": "^4.0.0"
   },
