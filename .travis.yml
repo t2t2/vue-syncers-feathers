@@ -1,3 +1,16 @@
 language: node_js
 node_js:
 - '5.5'
+sudo: false
+
+script: npm run ci:test
+
+after_success:
+  - npm run coveralls
+
+cache:
+  directories:
+  - node_modules
+
+before_cache:
+  - rm -rf node_modules/.cache

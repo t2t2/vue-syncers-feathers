@@ -3,6 +3,7 @@
 > Synchronises feathers services with vue objects, updated in real time
 
 [![Build Status](https://travis-ci.org/t2t2/vue-syncers-feathers.svg?branch=master)](https://travis-ci.org/t2t2/vue-syncers-feathers)
+[![Coverage Status](https://coveralls.io/repos/github/t2t2/vue-syncers-feathers/badge.svg?branch=master)](https://coveralls.io/github/t2t2/vue-syncers-feathers?branch=master)
 
 ## Setup
 
