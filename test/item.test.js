@@ -148,7 +148,10 @@ test('Creating items', async t => {
 	t.plan(3)
 
 	// Most of this is already tested in other places
-	await t.throws(syncer.ready())
+	instance.$once('syncer-error', () => {
+		t.pass()
+	})
+	await syncer.ready()
 
 	t.is(syncer.state, null)
 

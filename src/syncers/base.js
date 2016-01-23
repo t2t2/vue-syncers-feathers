@@ -66,8 +66,6 @@ export default class BaseFeathersSyncer {
 	_handleStateLoadingError(error) {
 		this.loading = false
 		this.vm.$emit('syncer-error', this.path, error)
-
-		throw error
 	}
 
 	/**

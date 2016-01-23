@@ -48,7 +48,12 @@ export default class ItemSyncer extends BaseSyncer {
 
 		// When new value is found
 		function callback(newVal) {
-			this.filters.id = newVal
+			if (typeof newVal === 'string' && /^\d+$/.test(newVal)) {
+				// id is int like, but string
+				this.filters.id = parseInt(newVal, 10)
+			} else {
+				this.filters.id = newVal
+			}
 
 			// Clear state (if now null it just makes sure)
 			this.state = this._initialState()
@@ -104,7 +109,7 @@ export default class ItemSyncer extends BaseSyncer {
 	 * @private
 	 */
 	_set(item) {
-		this.state = item
+		this.Vue.set(this, 'state', item)
 	}
 
 	/**
