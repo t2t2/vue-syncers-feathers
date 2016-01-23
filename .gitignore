@@ -1,0 +1,19 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# Dependency directory
+# https://docs.npmjs.com/misc/faq#should-i-check-my-node-modules-folder-into-git
+node_modules
+
+# Coverage
+.nyc_output
+coverage
+
+# Built example
+example/*.build.js
+example/*.build.js.map
+
+# Dist version (made in pre-publish and sent directly to npm)
+dist/
