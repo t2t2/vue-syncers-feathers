@@ -1,7 +1,7 @@
 <template>
 	<div class="container">
 		<div class="panel">
-			<p>Item: <input type="number" v-model="target" debounce="200"/></p>
+			<p>Item: <input type="number" v-model="target" debounce="200" number /></p>
 
 			<div v-if="error">
 				<h4>{{ error.message }}</h4>

@@ -1,4 +1,5 @@
 import BaseSyncer from './base'
+import {warn, isNumericIDLike} from '../utils'
 
 /**
  * Item syncer used for when there's no constraints
@@ -48,11 +49,12 @@ export default class ItemSyncer extends BaseSyncer {
 
 		// When new value is found
 		function callback(newVal) {
-			if (typeof newVal === 'string' && /^\d+$/.test(newVal)) {
-				// id is int like, but string
-				this.filters.id = parseInt(newVal, 10)
-			} else {
-				this.filters.id = newVal
+			this.filters.id = newVal
+
+			// Warn about string id's that seem like they shooooouldn't
+			/* istanbul ignore next */
+			if (process.env.NODE_ENV !== 'production' && isNumericIDLike(newVal)) {
+				warn('String ID that looks like a number given', this.path, newVal)
 			}
 
 			// Clear state (if now null it just makes sure)

@@ -1,6 +1,5 @@
-import some from 'lodash/some'
 import Syncer from './syncer'
-import {noop} from './utils'
+import {noop, some} from './utils'
 
 /**
  * Set up syncer objects
@@ -35,7 +34,10 @@ function initSyncers(Vue) {
 		Vue.util.defineReactive(this, '$loadingSyncers', true)
 
 		this.$watch(function () {
-			return some(this._syncers, 'loading')
+			// If any are true
+			return some(this._syncers, (syncer) => {
+				return 'loading' in syncer ? syncer.loading : false
+			})
 		}, (newVal) => {
 			this.$loadingSyncers = newVal
 		}, {sync: true, immediate: true})

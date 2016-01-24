@@ -1,11 +1,7 @@
 // Provides query based filtering on the frontend
 // Based on source of feathers-memory
 
-import bind from 'lodash/bind'
-import every from 'lodash/every'
-import isEqual from 'lodash/isEqual'
-import isObject from 'lodash/isObject'
-import some from 'lodash/some'
+import {every, isObject, some} from './utils'
 
 export const baseIgnoredKeys = ['$sort', '$limit', '$skip', '$select', '$populate']
 
@@ -49,7 +45,9 @@ export function createMatcher(specialFilters = baseSpecialFilters, ignoredKeys =
 			}
 			// or clause
 			if (filterKey === '$or') {
-				return some(filterValue, bind(matches, this, item, bind.placeholder, false))
+				return some(filterValue, function (newQuery) {
+					return matches(item, newQuery, false)
+				})
 			}
 			// Special filters
 			if (filterKey in specialFilters) {
@@ -64,7 +62,7 @@ export function createMatcher(specialFilters = baseSpecialFilters, ignoredKeys =
 				return matches(item[filterKey], filterValue, false)
 			}
 			// Match
-			return filterKey in item && isEqual(item[filterKey], filterValue)
+			return filterKey in item && item[filterKey] === filterValue
 		})
 	}
 }
