@@ -9,7 +9,7 @@
 
 ### Webpack/Browserify
 
-*Note: Not yet published in npm, for installing use* `npm install t2t2/vue-syncers-feathers --save`
+`npm install vue-syncers-feathers --save`
 
 ```js
 import feathers from 'feathers-client'
