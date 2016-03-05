@@ -1,5 +1,5 @@
 import test from 'ava'
-import 'babel-core/register'
+import 'babel-register'
 import {addVueWithPlugin, vueCleanup} from './helpers/before/vue-hookup'
 
 function makeBaseDriver() {

@@ -17,6 +17,10 @@ module.exports = {
 				test: /\.vue$/,
 				loader: 'vue',
 			},
+			{ // Needed for feathers/client
+				test: /\.json$/,
+				loader: 'json',
+			},
 			{
 				test: /\.js$/,
 				exclude: /node_modules/,

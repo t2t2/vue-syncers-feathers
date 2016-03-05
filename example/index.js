@@ -1,13 +1,17 @@
-import feathers from 'feathers-client'
-import io from 'socket.io-client'
-import Vue from 'vue'
-import VueSyncersFeathers from '../src'
-
 // Feathers client
+import feathers from 'feathers/client'
+import feathersIO from 'feathers-socketio/client'
+import io from 'socket.io-client'
+
 const socket = io()
-const client = feathers().configure(feathers.socketio(socket))
+const client = feathers()
+client.configure(feathersIO(socket))
+
+import Vue from 'vue'
 
 // Install vue-syncers-feathers
+import VueSyncersFeathers from '../src'
+
 Vue.use(VueSyncersFeathers, {
 	driverOptions: {
 		feathers: client,

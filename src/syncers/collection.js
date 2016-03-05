@@ -112,7 +112,13 @@ export default class CollectionSyncer extends BaseSyncer {
 	 * @private
 	 */
 	_loadState() {
-		return this.service.find(this.filters.query || {}).then((items) => {
+		const params = {}
+
+		if (this.filters.query) {
+			params.query = this.filters.query
+		}
+
+		return this.service.find(params).then((items) => {
 			items.forEach((item) => {
 				this._set(item[this._id], item)
 			})

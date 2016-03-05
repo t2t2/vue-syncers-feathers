@@ -1,5 +1,5 @@
 import test from 'ava'
-import 'babel-core/register'
+import 'babel-register'
 
 import Vue from 'vue'
 import CollectionSyncer from '../src/syncers/collection'

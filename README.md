@@ -1,6 +1,6 @@
 # vue-syncers-feathers
 
-> Synchronises feathers services with vue objects, updated in real time
+> Synchronises feathers services with vue objects, updated in real-time
 
 [![Build Status](https://travis-ci.org/t2t2/vue-syncers-feathers.svg?branch=master)](https://travis-ci.org/t2t2/vue-syncers-feathers)
 [![Coverage Status](https://coveralls.io/repos/github/t2t2/vue-syncers-feathers/badge.svg?branch=master)](https://coveralls.io/github/t2t2/vue-syncers-feathers?branch=master)
@@ -12,9 +12,11 @@
 `npm install vue-syncers-feathers --save`
 
 ```js
-import feathers from 'feathers-client'
-import io from 'socket.io-client'
 // Set up feathers client
+// You can do this whatever way you prefer, eg. feathers-client, or a more lightweight shim that exposes approtiate client.service(path)
+import feathers from 'feathers/client'
+import feathersIO from 'feathers-socketio/client'
+import io from 'socket.io-client'
 const socket = io()
 const client = feathers().configure(feathers.socketio(socket))
 
@@ -34,7 +36,7 @@ Vue.use(VueSyncersFeathers, {
 * `driver` **[ADVANCED]** - Swapping out driver that does fetching and keeping up to date with feathers server (Yes, you
 could technically write a driver for firebase/meteor/manual... and split the core off to it's own thing)
 * `driverOptions` - Options for feathers syncer:
-	* `feathers` **[REQUIRED]** - [feathers-client](https://github.com/feathersjs/feathers-client) instance
+	* `feathers` **[REQUIRED]** - [feathers client](http://docs.feathersjs.com/clients/readme.html) instance
 
 ## Usage
 
@@ -84,7 +86,7 @@ value: `string|object` Service to use, or options object for advanced use
 #### General
 
 * service: service to use (same as `feathers.service(value)`)
-* idField: ID field (defaults to `id`, only needed if you did the same server side)
+* idField: ID field (defaults to `id`, only needed if you did the same server-side)
 
 #### Collection options (default)
 

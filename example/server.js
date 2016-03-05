@@ -1,6 +1,8 @@
-var feathers = require('feathers')
-var bodyParser = require('body-parser')
-var memory = require('feathers-memory')
+const feathers = require('feathers')
+const rest = require('feathers-rest')
+const bodyParser = require('body-parser')
+const socketio = require('feathers-socketio')
+const memory = require('feathers-memory')
 
 // Add like: 'var' ability to feathers-memory query
 require('feathers-memory/lib/utils').specialFilters.$like = function (key, value) {
@@ -10,12 +12,13 @@ require('feathers-memory/lib/utils').specialFilters.$like = function (key, value
 	}
 }
 
-var app = feathers()
+const app = feathers()
 
-app.configure(feathers.rest())
-	.configure(feathers.socketio())
-	.use(bodyParser.json())
-	.use(bodyParser.urlencoded({extended: true}))
+app.configure(rest())
+app.configure(socketio())
+
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({extended: true}))
 
 app.service('todos', memory({
 	startId: 2,

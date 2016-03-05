@@ -1,5 +1,5 @@
 import test from 'ava'
-import 'babel-core/register'
+import 'babel-register'
 
 import {addVueAndFeathers, vueAndFeathersCleanup} from './helpers/before/feathers-and-vue-hookup'
 import {addBasicService} from './helpers/before/feathers-hookup'
@@ -55,8 +55,8 @@ test.cb('Cleanup', t => {
 		},
 		destroyed: function () {
 			function checkEventListenersAreEmpty(event) {
-				if (client.connection.listeners['test ' + event]) {
-					t.is(client.connection.listeners['test ' + event].length, 0)
+				if (client.io.listeners['test ' + event]) {
+					t.is(client.io.listeners['test ' + event].length, 0)
 				} else {
 					t.pass()
 				}

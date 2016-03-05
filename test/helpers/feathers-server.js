@@ -1,6 +1,6 @@
 import feathers from 'feathers'
-import feathersClient from 'feathers-client'
-import {Service as FeathersClientService} from 'feathers-client/lib/sockets/base'
+import feathersClient from 'feathers/client'
+import feathersSocketIOclient from 'feathers-socketio/client'
 import {localSocketer} from './feathers-socket'
 import {SocketIO} from './mock-socket'
 
@@ -9,12 +9,7 @@ function localClient(url) {
 	// fool feathers into thinking it's socketio
 	connection.io = true
 
-	return function () {
-		const client = this
-
-		client.Service = FeathersClientService
-		client.connection = connection
-	}
+	return feathersSocketIOclient(connection)
 }
 
 let instance = 8901
@@ -36,10 +31,10 @@ export default function () {
 			const client = feathersClient().configure(localClient(url))
 			if (awaiting) {
 				return new Promise((resolve, reject) => {
-					client.connection.on('connect', () => {
+					client.io.on('connect', () => {
 						resolve(client)
 					})
-					client.connection.on('close', (error) => {
+					client.io.on('close', (error) => {
 						reject(error)
 					})
 				})

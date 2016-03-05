@@ -1,5 +1,5 @@
 import test from 'ava'
-import 'babel-core/register'
+import 'babel-register'
 import {addFeathersInstance, feathersCleanup} from './helpers/before/feathers-hookup'
 import {Service} from 'feathers-memory'
 
