@@ -26,7 +26,7 @@ function initSyncers(Vue) {
 				},
 				set: noop,
 				enumerable: true,
-				configurable: true,
+				configurable: true
 			})
 		})
 

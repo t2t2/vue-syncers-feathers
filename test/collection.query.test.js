@@ -14,9 +14,9 @@ test.beforeEach(t => {
 		data: function () {
 			return {
 				// To avoid vue-warn for setting paths on vm
-				variables: {},
+				variables: {}
 			}
-		},
+		}
 	})
 
 	t.context.createSyncer = function (settings) {
@@ -43,9 +43,9 @@ test('Get filtered collection', async t => {
 		service: 'test',
 		query: function () {
 			return {
-				otherItem: true,
+				otherItem: true
 			}
-		},
+		}
 	})
 
 	t.plan(1)
@@ -66,9 +66,9 @@ test('No results is just empty and no error', async t => {
 		service: 'test',
 		query: function () {
 			return {
-				noItems: true,
+				noItems: true
 			}
-		},
+		}
 	})
 
 	t.plan(1)
@@ -90,7 +90,7 @@ test('Switching queries', async t => {
 		service: 'test',
 		query: function () {
 			return instance.variables.query
-		},
+		}
 	})
 
 	t.plan(6)
@@ -134,9 +134,9 @@ test('Creating items', async t => {
 		service: 'test',
 		query: function () {
 			return {
-				tested: true,
+				tested: true
 			}
-		},
+		}
 	})
 
 	await syncer.ready()
@@ -169,9 +169,9 @@ test('Updating items', async t => {
 		service: 'test',
 		query: function () {
 			return {
-				tested: true,
+				tested: true
 			}
-		},
+		}
 	})
 
 	await syncer.ready()
@@ -210,9 +210,9 @@ test('Patching items', async t => {
 		service: 'test',
 		query: function () {
 			return {
-				tested: true,
+				tested: true
 			}
-		},
+		}
 	})
 
 	await syncer.ready()
@@ -251,9 +251,9 @@ test('Removing items', async t => {
 		service: 'test',
 		query: function () {
 			return {
-				tested: true,
+				tested: true
 			}
-		},
+		}
 	})
 
 	await syncer.ready()

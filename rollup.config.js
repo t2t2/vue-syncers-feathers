@@ -16,17 +16,17 @@ const config = {
 				[
 					'es2015',
 					{
-						'modules': false
+						modules: false
 					}
 				]
 			],
 			plugins: [
 				'external-helpers'
 			],
-			babelrc: false,
+			babelrc: false
 		})
 	],
-	dest: path.join(__dirname, '/dist/vue-syncers-feathers.common.js'),
+	dest: path.join(__dirname, '/dist/vue-syncers-feathers.common.js')
 }
 
 if (process.env.npm_lifecycle_event === 'build:commonjs') {

@@ -37,7 +37,7 @@ test('Get an item', async t => {
 		service: 'test',
 		id: function () {
 			return 1
-		},
+		}
 	})
 
 	t.plan(4)
@@ -67,7 +67,7 @@ test('Undefined items set null and send error', async t => {
 		service: 'test',
 		id: function () {
 			return 3
-		},
+		}
 	})
 
 	t.plan(4)
@@ -95,7 +95,7 @@ test('Switching items', async t => {
 		service: 'test',
 		id: function () {
 			return instance.variables.itemId
-		},
+		}
 	})
 
 	t.plan(6)
@@ -143,7 +143,7 @@ test('Creating items', async t => {
 		service: 'test',
 		id: function () {
 			return 3
-		},
+		}
 	})
 
 	t.plan(3)
@@ -173,7 +173,7 @@ test('Update item', async t => {
 		service: 'test',
 		id: function () {
 			return 1
-		},
+		}
 	})
 
 	t.plan(3)
@@ -199,7 +199,7 @@ test('Patch item', async t => {
 		service: 'test',
 		id: function () {
 			return 1
-		},
+		}
 	})
 
 	t.plan(3)
@@ -225,7 +225,7 @@ test('Delete item', async t => {
 		service: 'test',
 		id: function () {
 			return 1
-		},
+		}
 	})
 
 	t.plan(3)
@@ -253,7 +253,7 @@ test('Updates to other items don\'t affect the tracked item', async t => {
 		service: 'test',
 		id: function () {
 			return 1
-		},
+		}
 	})
 
 	t.plan(3)
@@ -267,7 +267,7 @@ test('Updates to other items don\'t affect the tracked item', async t => {
 		service.create({created: true}),
 		service.update(2, {updated: true}),
 		service.patch(3, {patched: true}),
-		service.remove(4),
+		service.remove(4)
 	])
 
 	t.deepEqual(syncer.state, {id: 1, tested: true})
@@ -283,9 +283,9 @@ test('Custom id field', async t => {
 			1: {
 				known: 1,
 				id: 99,
-				idTest: true,
-			},
-		},
+				idTest: true
+			}
+		}
 	}))
 
 	const syncer = t.context.syncer = createSyncer({
@@ -293,7 +293,7 @@ test('Custom id field', async t => {
 		id: function () {
 			return 1
 		},
-		idField: 'known',
+		idField: 'known'
 	})
 
 	t.plan(2)

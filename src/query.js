@@ -26,7 +26,7 @@ export const baseSpecialFilters = {
 	},
 	$ne(item, query) {
 		return item !== query
-	},
+	}
 }
 
 /**

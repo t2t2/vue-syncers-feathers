@@ -78,13 +78,7 @@
     "ignores": [
       "example/*.build.js"
     ],
-    "semicolon": false,
-    "rules": {
-      "comma-dangle": [
-        2,
-        "always-multiline"
-      ]
-    }
+    "semicolon": false
   },
   "ava": {
     "fail-fast": true,

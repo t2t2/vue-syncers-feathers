@@ -17,13 +17,13 @@ export function addBasicService(t) {
 		store: cloneDeep({
 			1: {
 				id: 1,
-				tested: true,
+				tested: true
 			},
 			2: {
 				id: 2,
-				otherItem: true,
-			},
-		}),
+				otherItem: true
+			}
+		})
 	}))
 	t.context.service = t.context.server.service('test')
 }

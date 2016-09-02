@@ -26,9 +26,9 @@ app.service('todos', memory({
 		1: {
 			id: 1,
 			title: 'Test Todo',
-			completed: false,
-		},
-	},
+			completed: false
+		}
+	}
 }))
 
 app.service('countries', memory({
@@ -48,8 +48,8 @@ app.use(require('webpack-dev-middleware')(compiler, {
 	publicPath: webpackConfig.output.publicPath,
 	noInfo: true,
 	stats: {
-		colors: true,
-	},
+		colors: true
+	}
 }))
 app.use(require('webpack-hot-middleware')(compiler))
 

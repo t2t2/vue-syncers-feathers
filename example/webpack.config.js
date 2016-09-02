@@ -4,22 +4,22 @@ var webpack = require('webpack')
 module.exports = {
 //	context: path.resolve(__dirname, './'),
 	entry: {
-		example: ['webpack-hot-middleware/client?reload=true', './example/index.js'],
+		example: ['webpack-hot-middleware/client?reload=true', './example/index.js']
 	},
 	output: {
 		path: path.normalize(path.resolve(__dirname, './')),
 		filename: '[name].build.js',
-		publicPath: '/',
+		publicPath: '/'
 	},
 	module: {
 		loaders: [
 			{
 				test: /\.vue$/,
-				loader: 'vue',
+				loader: 'vue'
 			},
 			{ // Needed for feathers/client
 				test: /\.json$/,
-				loader: 'json',
+				loader: 'json'
 			},
 			{
 				test: /\.js$/,
@@ -27,10 +27,10 @@ module.exports = {
 				loader: 'babel',
 				query: {
 					presets: ['es2015', 'stage-2'],
-					plugins: ['transform-runtime'],
-				},
-			},
-		],
+					plugins: ['transform-runtime']
+				}
+			}
+		]
 	},
 	plugins: [
 		new webpack.optimize.OccurenceOrderPlugin(),
@@ -38,9 +38,9 @@ module.exports = {
 		new webpack.NoErrorsPlugin(),
 		new webpack.DefinePlugin({
 			'process.env': {
-				NODE_ENV: '"development"',
-			},
-		}),
+				NODE_ENV: '"development"'
+			}
+		})
 	],
-	devtool: 'source-map',
+	devtool: 'source-map'
 }

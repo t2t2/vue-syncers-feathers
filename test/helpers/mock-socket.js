@@ -45,7 +45,7 @@ export class SocketIO extends BaseSocketIO {
 		const messageEvent = createMessageEvent({
 			type: event,
 			origin: this.url,
-			data,
+			data
 		})
 
 		// Dispatch on self since the event listeners are added to per connection

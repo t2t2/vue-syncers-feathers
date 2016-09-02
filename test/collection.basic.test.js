@@ -14,9 +14,9 @@ test.beforeEach(t => {
 		data: function () {
 			return {
 				// To avoid vue-warn for setting paths on vm
-				variables: {},
+				variables: {}
 			}
-		},
+		}
 	})
 
 	t.context.createSyncer = function (settings) {
@@ -40,7 +40,7 @@ test('Get basic collection', async t => {
 	})
 
 	const syncer = t.context.syncer = createSyncer({
-		service: 'test',
+		service: 'test'
 	})
 
 	t.plan(4)
@@ -67,7 +67,7 @@ test('New items are added to the instance', async t => {
 	})
 
 	const syncer = t.context.syncer = createSyncer({
-		service: 'test',
+		service: 'test'
 	})
 
 	await syncer.ready()
@@ -85,7 +85,7 @@ test('Current items are updated on the instance', async t => {
 	})
 
 	const syncer = t.context.syncer = createSyncer({
-		service: 'test',
+		service: 'test'
 	})
 
 	await syncer.ready()
@@ -103,7 +103,7 @@ test('Current items are patched on the instance', async t => {
 	})
 
 	const syncer = t.context.syncer = createSyncer({
-		service: 'test',
+		service: 'test'
 	})
 
 	await syncer.ready()
@@ -121,7 +121,7 @@ test('Deleted things are removed on the instance', async t => {
 	})
 
 	const syncer = t.context.syncer = createSyncer({
-		service: 'test',
+		service: 'test'
 	})
 
 	await syncer.ready()

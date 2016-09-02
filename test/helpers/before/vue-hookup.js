@@ -18,9 +18,9 @@ export function addVueInstance(t) {
 		data: function () {
 			return {
 				// To avoid vue-warn for setting paths on vm
-				variables: {},
+				variables: {}
 			}
-		},
+		}
 	})
 }
 

@@ -19,6 +19,6 @@ export default {
 	query: {
 		baseIgnoredKeys,
 		baseSpecialFilters,
-		createMatcher,
-	},
+		createMatcher
+	}
 }

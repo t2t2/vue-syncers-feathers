@@ -22,7 +22,7 @@ export function localSocketer(url) {
 
 				io.on('connection', socket => {
 					socket.feathers = {
-						provider: 'socketio',
+						provider: 'socketio'
 					}
 				})
 
@@ -36,11 +36,11 @@ export function localSocketer(url) {
 					},
 					params(socket) {
 						return socket.feathers
-					},
+					}
 				}
 
 				return this._super.apply(this, arguments)
-			},
+			}
 		}, app)
 	}
 }

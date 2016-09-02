@@ -12,8 +12,8 @@ test('Throws error if no feathers client set', t => {
 	t.throws(() => {
 		t.context.instance = new Vue({
 			sync: {
-				test: 'test',
-			},
+				test: 'test'
+			}
 		})
 	}, 'No feathers instance set on driver options')
 })

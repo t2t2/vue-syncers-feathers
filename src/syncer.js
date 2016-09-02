@@ -14,7 +14,7 @@ import ItemSyncer from './syncers/item'
 export default function syncerChooser(Vue, vm, driverOptions, path, settings) {
 	if (typeof settings === 'string') {
 		settings = {
-			service: settings,
+			service: settings
 		}
 	}
 

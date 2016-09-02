@@ -18,8 +18,8 @@ test.cb('Use single item syncer if requested', t => {
 				service: 'test',
 				id: function () {
 					return 1
-				},
-			},
+				}
+			}
 		},
 		events: {
 			'syncer-loaded'(path) {
@@ -30,8 +30,8 @@ test.cb('Use single item syncer if requested', t => {
 			'syncer-error'(path, error) {
 				t.fail(error)
 				t.end()
-			},
-		},
+			}
+		}
 	})
 })
 
@@ -40,7 +40,7 @@ test.cb('Cleanup', t => {
 
 	const instance = t.context.instance = new Vue({
 		sync: {
-			test: 'test',
+			test: 'test'
 		},
 		events: {
 			'syncer-loaded'() {
@@ -51,7 +51,7 @@ test.cb('Cleanup', t => {
 			'syncer-error'(path, error) {
 				t.fail(error)
 				t.end()
-			},
+			}
 		},
 		destroyed: function () {
 			function checkEventListenersAreEmpty(event) {
@@ -71,7 +71,7 @@ test.cb('Cleanup', t => {
 			t.deepEqual(this.test, null)
 
 			t.end()
-		},
+		}
 	})
 })
 
@@ -80,7 +80,7 @@ test.cb('Synced key can\'t be directly overwritten', t => {
 
 	t.context.instance = new Vue({
 		sync: {
-			test: 'test',
+			test: 'test'
 		},
 		events: {
 			'syncer-loaded'() {
@@ -93,7 +93,7 @@ test.cb('Synced key can\'t be directly overwritten', t => {
 			'syncer-error'(path, error) {
 				t.fail(error)
 				t.end()
-			},
-		},
+			}
+		}
 	})
 })

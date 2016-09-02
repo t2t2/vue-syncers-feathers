@@ -82,8 +82,8 @@ test.cb('Syncer lifecycle methods are called in right order', t => {
 		},
 
 		sync: {
-			test: 'test',
-		},
+			test: 'test'
+		}
 	})
 })
 
@@ -99,7 +99,7 @@ test.cb('Non-used instances work fine', t => {
 			Vue.util.nextTick(function () {
 				t.end()
 			})
-		},
+		}
 	})
 	instance.$destroy()
 })

@@ -10,7 +10,7 @@ test.afterEach(feathersCleanup)
 function defaultItem() {
 	return {
 		id: 1,
-		tested: true,
+		tested: true
 	}
 }
 
@@ -18,8 +18,8 @@ function testService() {
 	return new Service({
 		startId: 2,
 		store: {
-			1: defaultItem(),
-		},
+			1: defaultItem()
+		}
 	})
 }
 
@@ -53,7 +53,7 @@ test('Test the feathers testing server', async t => {
 		})
 
 		client.service('test').create({
-			tested: 'Ok',
+			tested: 'Ok'
 		}).then(item => {
 			matches(item)
 		}).catch(err => {
