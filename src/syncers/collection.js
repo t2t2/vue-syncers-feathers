@@ -1,5 +1,5 @@
-import BaseSyncer from './base'
 import queryMatcher from '../query'
+import BaseSyncer from './base'
 
 /**
  * Collection syncer used for multiple items
@@ -69,7 +69,7 @@ export default class CollectionSyncer extends BaseSyncer {
 				}
 			}
 
-			return new Promise((resolve) => {
+			return new Promise(resolve => {
 				callback.hook = resolve
 
 				this.unwatchers.query = this.vm.$watch(this.settings.query, callback.bind(this), {immediate: true})
@@ -118,8 +118,8 @@ export default class CollectionSyncer extends BaseSyncer {
 			params.query = this.filters.query
 		}
 
-		return this.service.find(params).then((items) => {
-			items.forEach((item) => {
+		return this.service.find(params).then(items => {
+			items.forEach(item => {
 				this._set(item[this._id], item)
 			})
 			this._newStateLoaded()

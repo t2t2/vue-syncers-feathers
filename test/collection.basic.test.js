@@ -46,17 +46,17 @@ test('Get basic collection', async t => {
 	t.plan(4)
 
 	// Loading by default
-	t.ok(syncer.loading)
+	t.truthy(syncer.loading)
 
-	instance.$once('syncer-loaded', (path) => {
+	instance.$once('syncer-loaded', path => {
 		// correct path
 		t.is(path, 'test')
 	})
 
 	await syncer.ready()
 
-	t.notOk(syncer.loading)
-	t.same(syncer.state, {1: {id: 1, tested: true}, 2: {id: 2, otherItem: true}})
+	t.falsy(syncer.loading)
+	t.deepEqual(syncer.state, {1: {id: 1, tested: true}, 2: {id: 2, otherItem: true}})
 })
 
 test('New items are added to the instance', async t => {
@@ -74,7 +74,7 @@ test('New items are added to the instance', async t => {
 
 	await service.create({created: true})
 
-	t.same(syncer.state, {1: {id: 1, tested: true}, 2: {id: 2, otherItem: true}, 3: {id: 3, created: true}})
+	t.deepEqual(syncer.state, {1: {id: 1, tested: true}, 2: {id: 2, otherItem: true}, 3: {id: 3, created: true}})
 })
 
 test('Current items are updated on the instance', async t => {
@@ -92,7 +92,7 @@ test('Current items are updated on the instance', async t => {
 
 	await service.update(1, {id: 1, updated: true})
 
-	t.same(syncer.state, {1: {id: 1, updated: true}, 2: {id: 2, otherItem: true}})
+	t.deepEqual(syncer.state, {1: {id: 1, updated: true}, 2: {id: 2, otherItem: true}})
 })
 
 test('Current items are patched on the instance', async t => {
@@ -110,7 +110,7 @@ test('Current items are patched on the instance', async t => {
 
 	await service.patch(1, {id: 1, updated: true})
 
-	t.same(syncer.state, {1: {id: 1, tested: true, updated: true}, 2: {id: 2, otherItem: true}})
+	t.deepEqual(syncer.state, {1: {id: 1, tested: true, updated: true}, 2: {id: 2, otherItem: true}})
 })
 
 test('Deleted things are removed on the instance', async t => {
@@ -128,5 +128,5 @@ test('Deleted things are removed on the instance', async t => {
 
 	await service.remove(1)
 
-	t.same(syncer.state, {2: {id: 2, otherItem: true}})
+	t.deepEqual(syncer.state, {2: {id: 2, otherItem: true}})
 })

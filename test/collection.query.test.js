@@ -52,7 +52,7 @@ test('Get filtered collection', async t => {
 
 	await syncer.ready()
 
-	t.same(syncer.state, {2: {id: 2, otherItem: true}})
+	t.deepEqual(syncer.state, {2: {id: 2, otherItem: true}})
 })
 
 test('No results is just empty and no error', async t => {
@@ -75,7 +75,7 @@ test('No results is just empty and no error', async t => {
 
 	await syncer.ready()
 
-	t.same(syncer.state, {})
+	t.deepEqual(syncer.state, {})
 })
 
 test('Switching queries', async t => {
@@ -97,8 +97,8 @@ test('Switching queries', async t => {
 
 	await syncer.ready()
 
-	t.notOk(syncer.loading)
-	t.same(syncer.state, {1: {id: 1, tested: true}})
+	t.falsy(syncer.loading)
+	t.deepEqual(syncer.state, {1: {id: 1, tested: true}})
 
 	// Null query: just cleared
 	await new Promise(resolve => {
@@ -108,8 +108,8 @@ test('Switching queries', async t => {
 		})
 	})
 
-	t.notOk(syncer.loading)
-	t.same(syncer.state, {})
+	t.falsy(syncer.loading)
+	t.deepEqual(syncer.state, {})
 
 	// Change query
 	await new Promise(resolve => {
@@ -119,8 +119,8 @@ test('Switching queries', async t => {
 		})
 	})
 
-	t.notOk(syncer.loading)
-	t.same(syncer.state, {2: {id: 2, otherItem: true}})
+	t.falsy(syncer.loading)
+	t.deepEqual(syncer.state, {2: {id: 2, otherItem: true}})
 })
 
 test('Creating items', async t => {
@@ -143,19 +143,19 @@ test('Creating items', async t => {
 
 	let should = {1: {id: 1, tested: true}}
 
-	t.same(syncer.state, should)
+	t.deepEqual(syncer.state, should)
 
 	// Create item that matches
 	const created = await service.create({tested: true, another: 'yep'})
 
 	should[created.id] = created
 
-	t.same(syncer.state, should)
+	t.deepEqual(syncer.state, should)
 
 	// Create item that doesn't match (doesn't get added)
 	await service.create({otherItem: true, another: 'yep'})
 
-	t.same(syncer.state, should)
+	t.deepEqual(syncer.state, should)
 })
 
 test('Updating items', async t => {
@@ -176,27 +176,27 @@ test('Updating items', async t => {
 
 	await syncer.ready()
 
-	t.same(syncer.state, {1: {id: 1, tested: true}})
+	t.deepEqual(syncer.state, {1: {id: 1, tested: true}})
 
 	// Update item that matches
 	await service.update(1, {id: 1, tested: true, another: 'yep'})
 
-	t.same(syncer.state, {1: {id: 1, tested: true, another: 'yep'}})
+	t.deepEqual(syncer.state, {1: {id: 1, tested: true, another: 'yep'}})
 
 	// Update item that doesn't match (is removed)
 	await service.update(1, {id: 1, another: 'yep'})
 
-	t.same(syncer.state, {})
+	t.deepEqual(syncer.state, {})
 
 	// Update item that didn't match (does nothing)
 	await service.update(1, {id: 1, another: 'again'})
 
-	t.same(syncer.state, {})
+	t.deepEqual(syncer.state, {})
 
 	// Update item that now matches
 	await service.update(2, {id: 2, tested: true, otherItem: true})
 
-	t.same(syncer.state, {2: {id: 2, tested: true, otherItem: true}})
+	t.deepEqual(syncer.state, {2: {id: 2, tested: true, otherItem: true}})
 })
 
 test('Patching items', async t => {
@@ -217,27 +217,27 @@ test('Patching items', async t => {
 
 	await syncer.ready()
 
-	t.same(syncer.state, {1: {id: 1, tested: true}})
+	t.deepEqual(syncer.state, {1: {id: 1, tested: true}})
 
 	// Patch item that matches
 	await service.patch(1, {another: 'yep'})
 
-	t.same(syncer.state, {1: {id: 1, tested: true, another: 'yep'}})
+	t.deepEqual(syncer.state, {1: {id: 1, tested: true, another: 'yep'}})
 
 	// Patch item that doesn't match (is removed)
 	await service.patch(1, {tested: false})
 
-	t.same(syncer.state, {})
+	t.deepEqual(syncer.state, {})
 
 	// Patch item that didn't match (does nothing)
 	await service.patch(1, {tested: 'still not'})
 
-	t.same(syncer.state, {})
+	t.deepEqual(syncer.state, {})
 
 	// Patch item that now matches
 	await service.patch(2, {tested: true})
 
-	t.same(syncer.state, {2: {id: 2, tested: true, otherItem: true}})
+	t.deepEqual(syncer.state, {2: {id: 2, tested: true, otherItem: true}})
 })
 
 test('Removing items', async t => {
@@ -258,15 +258,15 @@ test('Removing items', async t => {
 
 	await syncer.ready()
 
-	t.same(syncer.state, {1: {id: 1, tested: true}})
+	t.deepEqual(syncer.state, {1: {id: 1, tested: true}})
 
 	// Remove item that matches
 	await service.remove(1)
 
-	t.same(syncer.state, {})
+	t.deepEqual(syncer.state, {})
 
 	// Remove item that doesn't match (does nothing)
 	await service.remove(2)
 
-	t.same(syncer.state, {})
+	t.deepEqual(syncer.state, {})
 })

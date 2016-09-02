@@ -1,6 +1,6 @@
-import {Server} from './mock-socket'
 import Proto from 'uberproto'
 import socket from 'feathers-socket-commons'
+import {Server} from './mock-socket'
 
 /**
  * Mocks a connection between client and server
@@ -14,7 +14,7 @@ export function localSocketer(url) {
 	return function () {
 		const app = this
 
-		app.configure(socket)
+		app.configure(socket('io'))
 
 		Proto.mixin({
 			setup() {

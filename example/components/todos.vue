@@ -17,10 +17,9 @@
 							       :checked="todo.completed"
 							       @change="toggleTodo($event, todo)"
 							/>
-							<label
-									class="todo-title"
-									v-text="todo.title"
-									@dblclick="editTodo(todo)"
+							<label class="todo-title"
+							       v-text="todo.title"
+							       @dblclick="editTodo(todo)"
 							></label>
 							<button class="todo-destroy" @click="removeTodo(todo)">x</button>
 						</div>

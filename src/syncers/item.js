@@ -1,5 +1,5 @@
-import BaseSyncer from './base'
 import {warn, isNumericIDLike} from '../utils'
+import BaseSyncer from './base'
 
 /**
  * Item syncer used for when there's no constraints
@@ -72,7 +72,7 @@ export default class ItemSyncer extends BaseSyncer {
 			}
 		}
 
-		return new Promise((resolve) => {
+		return new Promise(resolve => {
 			callback.hook = resolve
 
 			this.unwatchers.id = this.vm.$watch(this.settings.id, callback.bind(this), {immediate: true})

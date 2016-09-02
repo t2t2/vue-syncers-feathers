@@ -144,3 +144,7 @@ Yes
 Yes
 * Vue-router/other plugin's objec--  
 Untested, but probably anything that integrates with vue (and properly defines reactivity) works
+
+## Compatibility warnings:
+
+* `feathers-socket-commons 2.2.0 - 2.3.0`: Broken event listener removal

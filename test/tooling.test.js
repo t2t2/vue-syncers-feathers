@@ -1,7 +1,7 @@
 import test from 'ava'
 import 'babel-register'
-import {addFeathersInstance, feathersCleanup} from './helpers/before/feathers-hookup'
 import {Service} from 'feathers-memory'
+import {addFeathersInstance, feathersCleanup} from './helpers/before/feathers-hookup'
 
 test.beforeEach(addFeathersInstance)
 
@@ -31,7 +31,7 @@ test('Test the feathers testing server', async t => {
 	// Getting items
 	const item = await client.service('test').get(1)
 
-	t.same(item, {id: 1, tested: true})
+	t.deepEqual(item, {id: 1, tested: true})
 
 	// Events emitted
 	await new Promise((resolve, reject) => {
@@ -40,13 +40,13 @@ test('Test the feathers testing server', async t => {
 		function matches(value) {
 			// First call sets, second tests
 			if (result) {
-				t.same(result, value)
+				t.deepEqual(result, value)
 			} else {
 				result = value
 			}
 		}
 
-		client.service('test').on('created', (item) => {
+		client.service('test').on('created', item => {
 			matches(item)
 
 			resolve()
@@ -56,8 +56,8 @@ test('Test the feathers testing server', async t => {
 			tested: 'Ok',
 		}).then(item => {
 			matches(item)
-		}).catch(error => {
-			t.fail(error)
+		}).catch(err => {
+			t.fail(err)
 			reject()
 		})
 	})

@@ -5,7 +5,7 @@ const socketio = require('feathers-socketio')
 const memory = require('feathers-memory')
 
 // Add like: 'var' ability to feathers-memory query
-require('feathers-memory/lib/utils').specialFilters.$like = function (key, value) {
+require('feathers-commons/lib/utils').specialFilters.$like = function (key, value) {
 	value = value.toString().toLowerCase()
 	return function (current) {
 		return current[key].toString().toLowerCase().indexOf(value) !== -1
@@ -41,6 +41,7 @@ app.service('countries', memory({
 // Webpack server
 var webpack = require('webpack')
 var webpackConfig = require('./webpack.config')
+
 var compiler = webpack(webpackConfig)
 
 app.use(require('webpack-dev-middleware')(compiler, {

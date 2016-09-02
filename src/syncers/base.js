@@ -1,3 +1,5 @@
+import {warn} from '../utils'
+
 export default class BaseFeathersSyncer {
 
 	/**
@@ -35,7 +37,7 @@ export default class BaseFeathersSyncer {
 	 * Cleanup after oneself
 	 */
 	destroy() {
-		Object.keys(this.unwatchers).forEach((key) => {
+		Object.keys(this.unwatchers).forEach(key => {
 			this.unwatchers[key]()
 		})
 
@@ -76,6 +78,19 @@ export default class BaseFeathersSyncer {
 	 * @private
 	 */
 	_listenForServiceEvent(event, callback) {
+		/* istanbul ignore next */
+		if (process.env.NODE_ENV !== 'production') {
+			const origCallback = callback
+			callback = (...args) => {
+				if (this.Vue === null) {
+					warn('Removed event listener is being called. Please update feathers-socket-commons package.')
+					return
+				}
+
+				origCallback(...args)
+			}
+		}
+
 		this.service.on(event, callback)
 		this.unwatchers['service-' + event] = () => {
 			this.service.off(event, callback)

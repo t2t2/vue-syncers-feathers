@@ -1,6 +1,6 @@
-import feathersTestServer from '../feathers-server'
 import {Service} from 'feathers-memory'
 import cloneDeep from 'lodash/cloneDeep'
+import feathersTestServer from '../feathers-server'
 
 export async function addFeathersInstance(t) {
 	// Feathers

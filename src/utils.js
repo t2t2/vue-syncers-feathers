@@ -27,7 +27,7 @@ export function some(collection, predicate, thisArg) {
 	if (Array.isArray(collection)) {
 		return collection.some(predicate, thisArg)
 	}
-	return Object.keys(collection).some((key) => {
+	return Object.keys(collection).some(key => {
 		return predicate.call(thisArg, collection[key], key, collection)
 	})
 }
@@ -43,7 +43,7 @@ export function every(collection, predicate, thisArg) {
 	if (Array.isArray(collection)) {
 		return collection.every(predicate, thisArg)
 	}
-	return Object.keys(collection).every((key) => {
+	return Object.keys(collection).every(key => {
 		return predicate.call(thisArg, collection[key], key, collection)
 	})
 }

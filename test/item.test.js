@@ -2,11 +2,12 @@ import test from 'ava'
 import 'babel-register'
 
 import Vue from 'vue'
+import {Service} from 'feathers-memory'
+
 import ItemSyncer from '../src/syncers/item'
 
 import {addFeathersInstance, addBasicService, feathersCleanup} from './helpers/before/feathers-hookup'
 import {addVueInstance, vueCleanup} from './helpers/before/vue-hookup'
-import {Service} from 'feathers-memory'
 
 test.beforeEach(addFeathersInstance)
 test.beforeEach(addBasicService)
@@ -42,17 +43,17 @@ test('Get an item', async t => {
 	t.plan(4)
 
 	// Loading by default
-	t.ok(syncer.loading)
+	t.truthy(syncer.loading)
 
-	instance.$once('syncer-loaded', (path) => {
+	instance.$once('syncer-loaded', path => {
 		// correct path
 		t.is(path, 'test')
 	})
 
 	await syncer.ready()
 
-	t.notOk(syncer.loading)
-	t.same(syncer.state, {id: 1, tested: true})
+	t.falsy(syncer.loading)
+	t.deepEqual(syncer.state, {id: 1, tested: true})
 })
 
 test('Undefined items set null and send error', async t => {
@@ -73,13 +74,13 @@ test('Undefined items set null and send error', async t => {
 
 	instance.$once('syncer-error', (path, error) => {
 		t.is(path, 'test')
-		t.ok(error)
+		t.truthy(error)
 	})
 
 	await syncer.ready()
 
-	t.notOk(syncer.loading)
-	t.same(syncer.state, null)
+	t.falsy(syncer.loading)
+	t.deepEqual(syncer.state, null)
 })
 
 test('Switching items', async t => {
@@ -101,8 +102,8 @@ test('Switching items', async t => {
 
 	await syncer.ready()
 
-	t.notOk(syncer.loading)
-	t.same(syncer.state, {id: 1, tested: true})
+	t.falsy(syncer.loading)
+	t.deepEqual(syncer.state, {id: 1, tested: true})
 
 	// Test null id (should just clear the target)
 	await new Promise(resolve => {
@@ -112,7 +113,7 @@ test('Switching items', async t => {
 		})
 	})
 
-	t.notOk(syncer.loading)
+	t.falsy(syncer.loading)
 	t.is(syncer.state, null)
 
 	// Promiseify next loading
@@ -123,8 +124,8 @@ test('Switching items', async t => {
 		instance.variables.itemId = 2
 	})
 
-	t.notOk(syncer.loading)
-	t.same(syncer.state, {id: 2, otherItem: true})
+	t.falsy(syncer.loading)
+	t.deepEqual(syncer.state, {id: 2, otherItem: true})
 })
 
 /*
@@ -158,7 +159,7 @@ test('Creating items', async t => {
 	// Create the item
 	const created = await service.create({created: 'Ok'})
 
-	t.same(syncer.state, created)
+	t.deepEqual(syncer.state, created)
 })
 
 test('Update item', async t => {
@@ -179,12 +180,12 @@ test('Update item', async t => {
 
 	await syncer.ready()
 
-	t.notOk(syncer.loading)
-	t.same(syncer.state, {id: 1, tested: true})
+	t.falsy(syncer.loading)
+	t.deepEqual(syncer.state, {id: 1, tested: true})
 
 	await service.update(1, {updated: true})
 
-	t.same(syncer.state, {id: 1, updated: true})
+	t.deepEqual(syncer.state, {id: 1, updated: true})
 })
 
 test('Patch item', async t => {
@@ -205,12 +206,12 @@ test('Patch item', async t => {
 
 	await syncer.ready()
 
-	t.notOk(syncer.loading)
-	t.same(syncer.state, {id: 1, tested: true})
+	t.falsy(syncer.loading)
+	t.deepEqual(syncer.state, {id: 1, tested: true})
 
 	await service.patch(1, {updated: true})
 
-	t.same(syncer.state, {id: 1, tested: true, updated: true})
+	t.deepEqual(syncer.state, {id: 1, tested: true, updated: true})
 })
 
 test('Delete item', async t => {
@@ -231,12 +232,12 @@ test('Delete item', async t => {
 
 	await syncer.ready()
 
-	t.notOk(syncer.loading)
-	t.same(syncer.state, {id: 1, tested: true})
+	t.falsy(syncer.loading)
+	t.deepEqual(syncer.state, {id: 1, tested: true})
 
 	await service.remove(1)
 
-	t.same(syncer.state, null)
+	t.deepEqual(syncer.state, null)
 })
 
 test('Updates to other items don\'t affect the tracked item', async t => {
@@ -259,8 +260,8 @@ test('Updates to other items don\'t affect the tracked item', async t => {
 
 	await syncer.ready()
 
-	t.notOk(syncer.loading)
-	t.same(syncer.state, {id: 1, tested: true})
+	t.falsy(syncer.loading)
+	t.deepEqual(syncer.state, {id: 1, tested: true})
 
 	await Promise.all([
 		service.create({created: true}),
@@ -269,7 +270,7 @@ test('Updates to other items don\'t affect the tracked item', async t => {
 		service.remove(4),
 	])
 
-	t.same(syncer.state, {id: 1, tested: true})
+	t.deepEqual(syncer.state, {id: 1, tested: true})
 })
 
 test('Custom id field', async t => {
@@ -299,6 +300,6 @@ test('Custom id field', async t => {
 
 	await syncer.ready()
 
-	t.notOk(syncer.loading)
-	t.same(syncer.state, {known: 1, id: 99, idTest: true})
+	t.falsy(syncer.loading)
+	t.deepEqual(syncer.state, {known: 1, id: 99, idTest: true})
 })

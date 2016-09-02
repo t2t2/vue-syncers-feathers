@@ -24,7 +24,7 @@ test.cb('Use single item syncer if requested', t => {
 		events: {
 			'syncer-loaded'(path) {
 				t.is(path, 'testVar')
-				t.same(this.testVar, {id: 1, tested: true})
+				t.deepEqual(this.testVar, {id: 1, tested: true})
 				t.end()
 			},
 			'syncer-error'(path, error) {
@@ -68,7 +68,7 @@ test.cb('Cleanup', t => {
 			checkEventListenersAreEmpty('removed')
 
 			// syncer value is null after deletion
-			t.same(this.test, null)
+			t.deepEqual(this.test, null)
 
 			t.end()
 		},

@@ -90,7 +90,7 @@ test.cb('Syncer lifecycle methods are called in right order', t => {
 test.cb('Non-used instances work fine', t => {
 	const Vue = t.context.Vue
 
-	t.ok(Vue.$syncer)
+	t.truthy(Vue.$syncer)
 
 	const instance = new Vue({
 		destroyed: function () {

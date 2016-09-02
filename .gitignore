@@ -14,6 +14,7 @@ coverage
 # Built example
 example/*.build.js
 example/*.build.js.map
+stats.json
 
 # Dist version (made in pre-publish and sent directly to npm)
 dist/

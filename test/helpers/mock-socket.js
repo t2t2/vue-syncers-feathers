@@ -34,22 +34,22 @@ function cloneCustomiser(arg) {
 export class SocketIO extends BaseSocketIO {
 
 	// Allow more than 1 arg
-	emit(event, ...customArgs) {
+	emit(event, ...data) {
 		if (this.readyState !== BaseSocketIO.OPEN) {
 			throw new Error('SocketIO is already in CLOSING or CLOSED state')
 		}
 
+		// Emulate connection by re-creating all objects
+		data = cloneDeepWith(data, cloneCustomiser)
+
 		const messageEvent = createMessageEvent({
 			type: event,
 			origin: this.url,
-			data: customArgs,
+			data,
 		})
 
-		// Emulate connection by re-creating all objects
-		customArgs = cloneDeepWith(customArgs, cloneCustomiser)
-
 		// Dispatch on self since the event listeners are added to per connection
-		this.dispatchEvent(messageEvent, ...customArgs)
+		this.dispatchEvent(messageEvent, ...data)
 	}
 
 	once(type, callback) {

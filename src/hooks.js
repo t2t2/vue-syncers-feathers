@@ -15,7 +15,7 @@ function initSyncers(Vue) {
 	let synced = this.$options.sync
 	if (synced) {
 		// Set up each syncer
-		Object.keys(synced).forEach((key) => {
+		Object.keys(synced).forEach(key => {
 			const userDef = synced[key]
 
 			this._syncers[key] = new SyncCreator(Vue, this, Vue.$syncer.driverOptions || {}, key, userDef)
@@ -35,10 +35,10 @@ function initSyncers(Vue) {
 
 		this.$watch(function () {
 			// If any are true
-			return some(this._syncers, (syncer) => {
+			return some(this._syncers, syncer => {
 				return 'loading' in syncer ? syncer.loading : false
 			})
-		}, (newVal) => {
+		}, newVal => {
 			this.$loadingSyncers = newVal
 		}, {sync: true, immediate: true})
 	} else {
@@ -53,7 +53,7 @@ function initSyncers(Vue) {
  * This tells the system that it's ok to request data (and to eg. set up watchers)
  */
 function startSyncers() {
-	Object.keys(this._syncers).forEach((key) => {
+	Object.keys(this._syncers).forEach(key => {
 		this._syncers[key].ready()
 	})
 }
@@ -62,7 +62,7 @@ function startSyncers() {
  * Cleans up all of the syncers
  */
 function cleanupSyncers() {
-	Object.keys(this._syncers).forEach((key) => {
+	Object.keys(this._syncers).forEach(key => {
 		this._syncers[key].destroy()
 		delete this._syncers[key]
 	})

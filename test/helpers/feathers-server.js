@@ -34,7 +34,7 @@ export default function () {
 					client.io.on('connect', () => {
 						resolve(client)
 					})
-					client.io.on('close', (error) => {
+					client.io.on('close', error => {
 						reject(error)
 					})
 				})
