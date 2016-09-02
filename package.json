@@ -10,16 +10,18 @@
     "src"
   ],
   "scripts": {
-    "build": "npm run build:commonjs",
+    "build": "npm-run-all clean:dist build:*",
     "build:commonjs": "rollup -c",
     "coveralls": "nyc report --reporter=text-lcov | coveralls",
-    "ci:test": "npm run lint && npm run coverage",
-    "clean": "rimraf dist/*.* coverage/**/*.*",
-    "coverage": "nyc npm run unit",
-    "coverage-html": "rimraf coverage/**/*.* && npm run coverage && nyc report --reporter=html",
+    "ci:test": "npm-run-all lint coverage",
+    "clean": "npm-run-all clean:*",
+    "clean:dist": "rimraf dist/*.*",
+    "clean:coverage": "rimraf coverage/**/*.*",
+    "coverage": "cross-env NODE_ENV=test nyc npm run unit",
+    "coverage-html": "npm-run-all clean:coverage coverage && nyc report --reporter=html",
     "lint": "xo",
     "serve-example": "node example/server.js",
-    "test": "npm run lint && npm run unit",
+    "test": "npm-run-all lint unit",
     "unit": "ava"
   },
   "keywords": [
@@ -36,6 +38,7 @@
     "babel-loader": "^6.2.5",
     "babel-plugin-add-module-exports": "^0.2.1",
     "babel-plugin-external-helpers": "^6.8.0",
+    "babel-plugin-istanbul": "^2.0.1",
     "babel-plugin-transform-runtime": "^6.12.0",
     "babel-preset-es2015": "^6.14.0",
     "babel-preset-stage-2": "^6.13.0",
@@ -44,6 +47,7 @@
     "body-parser": "^1.15.2",
     "country-data": "0.0.29",
     "coveralls": "^2.11.12",
+    "cross-env": "^2.0.1",
     "css-loader": "^0.24.0",
     "feathers": "^2.0.1",
     "feathers-commons": "^0.7.4",
@@ -54,6 +58,7 @@
     "json-loader": "^0.5.4",
     "lodash": "^4.15.0",
     "mock-socket": "^4.0.1",
+    "npm-run-all": "^3.1.0",
     "nyc": "^8.1.0",
     "rimraf": "^2.5.4",
     "rollup": "^0.34.10",
@@ -70,6 +75,20 @@
     "webpack-hot-middleware": "^2.12.2",
     "xo": "^0.16.0"
   },
+  "ava": {
+    "fail-fast": true,
+    "files": "test/**/*.test.js",
+    "require": [
+      "babel-register"
+    ]
+  },
+  "nyc": {
+    "require": [
+      "babel-register"
+    ],
+    "sourceMap": false,
+    "instrument": false
+  },
   "xo": {
     "envs": [
       "node",
@@ -79,9 +98,5 @@
       "example/*.build.js"
     ],
     "semicolon": false
-  },
-  "ava": {
-    "fail-fast": true,
-    "files": "test/**/*.test.js"
   }
 }

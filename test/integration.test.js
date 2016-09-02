@@ -1,5 +1,4 @@
 import test from 'ava'
-import 'babel-register'
 
 import {addVueAndFeathers, vueAndFeathersCleanup} from './helpers/before/feathers-and-vue-hookup'
 import {addBasicService} from './helpers/before/feathers-hookup'

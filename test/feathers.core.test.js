@@ -1,5 +1,4 @@
 import test from 'ava'
-import 'babel-register'
 import {addVueWithPlugin, vueCleanup} from './helpers/before/vue-hookup'
 
 test.beforeEach(addVueWithPlugin)

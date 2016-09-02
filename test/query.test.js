@@ -1,5 +1,4 @@
 import test from 'ava'
-import 'babel-register'
 import matches from '../src/query'
 
 test('Object matches partially', t => {

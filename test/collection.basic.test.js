@@ -1,5 +1,4 @@
 import test from 'ava'
-import 'babel-register'
 
 import Vue from 'vue'
 import CollectionSyncer from '../src/syncers/collection'

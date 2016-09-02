@@ -1,5 +1,4 @@
 import test from 'ava'
-import 'babel-register'
 import * as utils from '../src/utils'
 
 test('every array', t => {

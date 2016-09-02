@@ -1,4 +1,9 @@
 {
   "presets": ["es2015", "stage-2"],
-  "plugins": ["add-module-exports", "transform-runtime"]
+  "plugins": ["add-module-exports", "transform-runtime"],
+  "env": {
+    "test": {
+      "plugins": ["istanbul"]
+    }
+  }
 }
