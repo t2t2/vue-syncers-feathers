@@ -14,9 +14,11 @@ const config = {
 		babel({
 			presets: [
 				[
-					'es2015',
+					'latest',
 					{
-						modules: false
+						es2015: {
+							modules: false
+						}
 					}
 				]
 			],

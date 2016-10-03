@@ -18,3 +18,6 @@ stats.json
 
 # Dist version (made in pre-publish and sent directly to npm)
 dist/
+
+# Editors/IDEs
+.vscode/
