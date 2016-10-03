@@ -9,6 +9,10 @@ export function addVueWithPlugin(t, options) {
 	Vue.set = BaseVue.set
 	Vue.delete = BaseVue.delete
 	Vue.nextTick = BaseVue.nextTick
+	// To reference the right Vue instance
+	Vue.mixin = function (mixin) {
+		Vue.options = Vue.util.mergeOptions(Vue.options, mixin)
+	}
 
 	BaseVue.use.call(Vue, {install: VueSyncersFeathers.install}, options)
 }

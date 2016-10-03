@@ -31,7 +31,7 @@ test.cb('Syncer lifecycle methods are called in right order', t => {
 		constructor(Vue) {
 			super(Vue)
 
-			t.is(order++, 1, 'Syncer instance set up')
+			t.is(order++, 0, 'Syncer instance set up')
 		}
 
 		ready() {
@@ -43,7 +43,7 @@ test.cb('Syncer lifecycle methods are called in right order', t => {
 		destroy() {
 			super.destroy()
 
-			t.is(order++, 5, 'Syncer being destroyed')
+			t.is(order++, 4, 'Syncer being destroyed')
 		}
 	}
 
@@ -51,7 +51,7 @@ test.cb('Syncer lifecycle methods are called in right order', t => {
 
 	const instance = new Vue({
 		init: function () {
-			t.is(order++, 0, 'Vue instance created')
+			t.is(order++, 1, 'Vue instance created')
 		},
 
 		created: function () {
@@ -64,7 +64,7 @@ test.cb('Syncer lifecycle methods are called in right order', t => {
 		},
 
 		beforeDestroy: function () {
-			t.is(order++, 4, 'Vue instance being destroyed')
+			t.is(order++, 5, 'Vue instance being destroyed')
 		},
 
 		destroyed: function () {

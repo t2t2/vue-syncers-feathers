@@ -1,4 +1,4 @@
-import installHooks from './hooks'
+import syncerMixin from './mixin'
 import {baseIgnoredKeys, baseSpecialFilters, createMatcher} from './query'
 
 export default {
@@ -13,7 +13,7 @@ export default {
 	 */
 	install: function (Vue, options = {}) {
 		Vue.$syncer = options
-		installHooks(Vue)
+		Vue.mixin(syncerMixin(Vue))
 	},
 
 	query: {
