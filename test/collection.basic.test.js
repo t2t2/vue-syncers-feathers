@@ -59,7 +59,7 @@ test('Get basic collection', async t => {
 })
 
 test('New items are added to the instance', async t => {
-	const {instance, service, createSyncer} = t.context
+	const {callService, createSyncer, instance} = t.context
 
 	instance.$on('syncer-error', (path, error) => {
 		t.fail(error)
@@ -70,14 +70,13 @@ test('New items are added to the instance', async t => {
 	})
 
 	await syncer.ready()
-
-	await service.create({created: true})
+	await callService('create', {created: true})
 
 	t.deepEqual(syncer.state, {1: {id: 1, tested: true}, 2: {id: 2, otherItem: true}, 3: {id: 3, created: true}})
 })
 
 test('Current items are updated on the instance', async t => {
-	const {instance, service, createSyncer} = t.context
+	const {callService, createSyncer, instance} = t.context
 
 	instance.$on('syncer-error', (path, error) => {
 		t.fail(error)
@@ -88,14 +87,13 @@ test('Current items are updated on the instance', async t => {
 	})
 
 	await syncer.ready()
-
-	await service.update(1, {id: 1, updated: true})
+	await callService('update', 1, {id: 1, updated: true})
 
 	t.deepEqual(syncer.state, {1: {id: 1, updated: true}, 2: {id: 2, otherItem: true}})
 })
 
 test('Current items are patched on the instance', async t => {
-	const {instance, service, createSyncer} = t.context
+	const {callService, createSyncer, instance} = t.context
 
 	instance.$on('syncer-error', (path, error) => {
 		t.fail(error)
@@ -106,14 +104,13 @@ test('Current items are patched on the instance', async t => {
 	})
 
 	await syncer.ready()
-
-	await service.patch(1, {id: 1, updated: true})
+	await callService('patch', 1, {id: 1, updated: true})
 
 	t.deepEqual(syncer.state, {1: {id: 1, tested: true, updated: true}, 2: {id: 2, otherItem: true}})
 })
 
 test('Deleted things are removed on the instance', async t => {
-	const {instance, service, createSyncer} = t.context
+	const {callService, instance, createSyncer} = t.context
 
 	instance.$on('syncer-error', (path, error) => {
 		t.fail(error)
@@ -124,8 +121,7 @@ test('Deleted things are removed on the instance', async t => {
 	})
 
 	await syncer.ready()
-
-	await service.remove(1)
+	await callService('remove', 1)
 
 	t.deepEqual(syncer.state, {2: {id: 2, otherItem: true}})
 })

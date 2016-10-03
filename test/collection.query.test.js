@@ -32,7 +32,7 @@ test.afterEach(feathersCleanup)
 test.afterEach(vueCleanup)
 
 test('Get filtered collection', async t => {
-	const {instance, createSyncer} = t.context
+	const {createSyncer, instance} = t.context
 
 	instance.$on('syncer-error', (path, error) => {
 		t.fail(error)
@@ -55,7 +55,7 @@ test('Get filtered collection', async t => {
 })
 
 test('No results is just empty and no error', async t => {
-	const {instance, createSyncer} = t.context
+	const {createSyncer, instance} = t.context
 
 	instance.$on('syncer-error', (path, error) => {
 		t.fail(error)
@@ -78,7 +78,7 @@ test('No results is just empty and no error', async t => {
 })
 
 test('Switching queries', async t => {
-	const {instance, createSyncer} = t.context
+	const {createSyncer, instance} = t.context
 
 	instance.$set('variables.query', {tested: true})
 	instance.$on('syncer-error', (path, error) => {
@@ -112,10 +112,10 @@ test('Switching queries', async t => {
 
 	// Change query
 	await new Promise(resolve => {
-		instance.variables.query = {otherItem: true}
-		Vue.util.nextTick(() => {
+		instance.$once('syncer-loaded', () => {
 			resolve()
 		})
+		instance.variables.query = {otherItem: true}
 	})
 
 	t.falsy(syncer.loading)
@@ -123,7 +123,7 @@ test('Switching queries', async t => {
 })
 
 test('Creating items', async t => {
-	const {instance, service, createSyncer} = t.context
+	const {callService, createSyncer, instance} = t.context
 
 	instance.$on('syncer-error', (path, error) => {
 		t.fail(error)
@@ -145,20 +145,19 @@ test('Creating items', async t => {
 	t.deepEqual(syncer.state, should)
 
 	// Create item that matches
-	const created = await service.create({tested: true, another: 'yep'})
-
+	const created = await callService('create', {tested: true, another: 'yep'})
 	should[created.id] = created
 
 	t.deepEqual(syncer.state, should)
 
 	// Create item that doesn't match (doesn't get added)
-	await service.create({otherItem: true, another: 'yep'})
+	await callService('create', {otherItem: true, another: 'yep'})
 
 	t.deepEqual(syncer.state, should)
 })
 
 test('Updating items', async t => {
-	const {instance, service, createSyncer} = t.context
+	const {callService, createSyncer, instance} = t.context
 
 	instance.$on('syncer-error', (path, error) => {
 		t.fail(error)
@@ -178,28 +177,28 @@ test('Updating items', async t => {
 	t.deepEqual(syncer.state, {1: {id: 1, tested: true}})
 
 	// Update item that matches
-	await service.update(1, {id: 1, tested: true, another: 'yep'})
+	await callService('update', 1, {id: 1, tested: true, another: 'yep'})
 
 	t.deepEqual(syncer.state, {1: {id: 1, tested: true, another: 'yep'}})
 
 	// Update item that doesn't match (is removed)
-	await service.update(1, {id: 1, another: 'yep'})
+	await callService('update', 1, {id: 1, another: 'yep'})
 
 	t.deepEqual(syncer.state, {})
 
 	// Update item that didn't match (does nothing)
-	await service.update(1, {id: 1, another: 'again'})
+	await callService('update', 1, {id: 1, another: 'again'})
 
 	t.deepEqual(syncer.state, {})
 
 	// Update item that now matches
-	await service.update(2, {id: 2, tested: true, otherItem: true})
+	await callService('update', 2, {id: 2, tested: true, otherItem: true})
 
 	t.deepEqual(syncer.state, {2: {id: 2, tested: true, otherItem: true}})
 })
 
 test('Patching items', async t => {
-	const {instance, service, createSyncer} = t.context
+	const {callService, createSyncer, instance} = t.context
 
 	instance.$on('syncer-error', (path, error) => {
 		t.fail(error)
@@ -219,28 +218,28 @@ test('Patching items', async t => {
 	t.deepEqual(syncer.state, {1: {id: 1, tested: true}})
 
 	// Patch item that matches
-	await service.patch(1, {another: 'yep'})
+	await callService('patch', 1, {another: 'yep'})
 
 	t.deepEqual(syncer.state, {1: {id: 1, tested: true, another: 'yep'}})
 
 	// Patch item that doesn't match (is removed)
-	await service.patch(1, {tested: false})
+	await callService('patch', 1, {tested: false})
 
 	t.deepEqual(syncer.state, {})
 
 	// Patch item that didn't match (does nothing)
-	await service.patch(1, {tested: 'still not'})
+	await callService('patch', 1, {tested: 'still not'})
 
 	t.deepEqual(syncer.state, {})
 
 	// Patch item that now matches
-	await service.patch(2, {tested: true})
+	await callService('patch', 2, {tested: true})
 
 	t.deepEqual(syncer.state, {2: {id: 2, tested: true, otherItem: true}})
 })
 
 test('Removing items', async t => {
-	const {instance, service, createSyncer} = t.context
+	const {callService, createSyncer, instance} = t.context
 
 	instance.$on('syncer-error', (path, error) => {
 		t.fail(error)
@@ -260,12 +259,12 @@ test('Removing items', async t => {
 	t.deepEqual(syncer.state, {1: {id: 1, tested: true}})
 
 	// Remove item that matches
-	await service.remove(1)
+	await callService('remove', 1)
 
 	t.deepEqual(syncer.state, {})
 
 	// Remove item that doesn't match (does nothing)
-	await service.remove(2)
+	await callService('remove', 2)
 
 	t.deepEqual(syncer.state, {})
 })

@@ -132,7 +132,7 @@ test('Switching items', async t => {
  * I'll reserve the right to judge you for doing this. But I'll probably end up doing the same somewhere
  */
 test('Creating items', async t => {
-	const {service, instance, createSyncer} = t.context
+	const {callService, createSyncer, instance} = t.context
 
 	instance.$on('syncer-loaded', () => {
 		t.fail('Loaded something')
@@ -156,13 +156,13 @@ test('Creating items', async t => {
 	t.is(syncer.state, null)
 
 	// Create the item
-	const created = await service.create({created: 'Ok'})
+	const created = await callService('create', {created: 'Ok'})
 
 	t.deepEqual(syncer.state, created)
 })
 
 test('Update item', async t => {
-	const {service, instance, createSyncer} = t.context
+	const {callService, createSyncer, instance} = t.context
 
 	instance.$on('syncer-error', (path, error) => {
 		t.fail(error)
@@ -182,13 +182,13 @@ test('Update item', async t => {
 	t.falsy(syncer.loading)
 	t.deepEqual(syncer.state, {id: 1, tested: true})
 
-	await service.update(1, {updated: true})
+	await callService('update', 1, {updated: true})
 
 	t.deepEqual(syncer.state, {id: 1, updated: true})
 })
 
 test('Patch item', async t => {
-	const {service, instance, createSyncer} = t.context
+	const {callService, createSyncer, instance} = t.context
 
 	instance.$on('syncer-error', (path, error) => {
 		t.fail(error)
@@ -208,13 +208,13 @@ test('Patch item', async t => {
 	t.falsy(syncer.loading)
 	t.deepEqual(syncer.state, {id: 1, tested: true})
 
-	await service.patch(1, {updated: true})
+	await callService('patch', 1, {updated: true})
 
 	t.deepEqual(syncer.state, {id: 1, tested: true, updated: true})
 })
 
 test('Delete item', async t => {
-	const {service, instance, createSyncer} = t.context
+	const {callService, createSyncer, instance} = t.context
 
 	instance.$on('syncer-error', (path, error) => {
 		t.fail(error)
@@ -234,13 +234,13 @@ test('Delete item', async t => {
 	t.falsy(syncer.loading)
 	t.deepEqual(syncer.state, {id: 1, tested: true})
 
-	await service.remove(1)
+	await callService('remove', 1)
 
 	t.deepEqual(syncer.state, null)
 })
 
 test('Updates to other items don\'t affect the tracked item', async t => {
-	const {service, instance, createSyncer} = t.context
+	const {callService, createSyncer, instance, service} = t.context
 
 	instance.$on('syncer-error', (path, error) => {
 		t.fail(error)
@@ -263,10 +263,10 @@ test('Updates to other items don\'t affect the tracked item', async t => {
 	t.deepEqual(syncer.state, {id: 1, tested: true})
 
 	await Promise.all([
-		service.create({created: true}),
-		service.update(2, {updated: true}),
-		service.patch(3, {patched: true}),
-		service.remove(4)
+		callService('create', {created: true}),
+		callService('update', 2, {updated: true}),
+		callService('patch', 3, {patched: true}),
+		callService('remove', 4)
 	])
 
 	t.deepEqual(syncer.state, {id: 1, tested: true})

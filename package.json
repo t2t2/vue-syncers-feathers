@@ -16,7 +16,7 @@
     "ci:test": "npm-run-all lint coverage",
     "clean": "npm-run-all clean:*",
     "clean:dist": "rimraf dist/*.*",
-    "clean:coverage": "rimraf coverage/**/*.*",
+    "clean:coverage": "rimraf coverage/**/*",
     "coverage": "cross-env NODE_ENV=test nyc npm run unit",
     "coverage-html": "npm-run-all clean:coverage coverage && nyc report --reporter=html",
     "lint": "xo",
