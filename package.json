@@ -20,6 +20,7 @@
     "coverage": "cross-env NODE_ENV=test nyc npm run unit",
     "coverage-html": "npm-run-all clean:coverage coverage && nyc report --reporter=html",
     "lint": "xo",
+    "prepublish": "npm run build",
     "serve-example": "node example/server.js",
     "test": "npm-run-all lint unit",
     "unit": "ava"
