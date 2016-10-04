@@ -50,7 +50,7 @@ test.cb('Syncer lifecycle methods are called in right order', t => {
 	Vue.$syncer.driver = TestSyncer
 
 	const instance = new Vue({
-		init: function () {
+		beforeCreate: function () {
 			t.is(order++, 1, 'Vue instance created')
 		},
 

@@ -80,7 +80,7 @@ test('No results is just empty and no error', async t => {
 test('Switching queries', async t => {
 	const {createSyncer, instance} = t.context
 
-	instance.$set('variables.query', {tested: true})
+	Vue.set(instance.variables, 'query', {tested: true})
 	instance.$on('syncer-error', (path, error) => {
 		t.fail(error)
 	})

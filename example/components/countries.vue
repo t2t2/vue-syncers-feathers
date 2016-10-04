@@ -3,8 +3,8 @@
 		<div class="panel">
 			<div class="countries">
 				<div class="form">
-					<input type="text" v-model="search" debounce="500" />
-					<div class="loading" v-if="$loadingSyncers">[Loading]</div>
+					<input type="text" v-model="searchInput" />
+					<div class="loading" v-if="searchIndicator">[{{ searchIndicator }}]</div>
 				</div>
 				<header class="country">
 					<div class="alpha">AA</div>
@@ -12,7 +12,7 @@
 					<div class="languages">Languages</div>
 				</header>
 				<ul class="countries-list">
-					<li class="country" v-for="country in countries" track-by="id">
+					<li class="country" v-for="country in countries" :key="country.id">
 						<div class="alpha" v-text="country.alpha3 || country.alpha2"></div>
 						<div class="name" v-text="country.name"></div>
 						<div class="languages" v-text="country.languages.join(', ')"></div>
@@ -20,34 +20,57 @@
 				</ul>
 			</div>
 		</div>
-		<pre class="vars" v-text="countries | json"></pre>
+		<pre class="vars" v-text="countries"></pre>
 	</div>
 
 </template>
 
 <script type="text/ecmascript-6">
+	import debounce from 'lodash/debounce'
+
 	export default {
-		data: function () {
+		data() {
 			return {
-				search: ''
+				searchQuery: '',
+				searchInput: ''
 			}
+		},
+		computed: {
+			searchIndicator() {
+				if (this.$loadingSyncers) {
+					return 'Loading'
+				} else if (this.searchInput !== this.searchQuery) {
+					return 'Typing'
+				}
+				return ''
+			}
+		},
+		methods: {
+			updateQuery: debounce(function() {
+				this.searchQuery = this.searchInput
+			}, 500)
 		},
 		sync: {
 			countries: {
 				service: 'countries',
-				query: function () {
-					if (this.search) {
+				query() {
+					if (this.searchQuery) {
 						return {
 							name: {
-								$like: this.search,
+								$like: this.searchQuery,
 							},
 						}
 					} else {
 						return {}
 					}
 				}
-			},
+			}
 		},
+		watch: {
+			searchInput() {
+				this.updateQuery()
+			}
+		}
 	}
 </script>
 

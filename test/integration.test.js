@@ -20,16 +20,16 @@ test.cb('Use single item syncer if requested', t => {
 				}
 			}
 		},
-		events: {
-			'syncer-loaded'(path) {
+		created() {
+			this.$on('syncer-loaded', path => {
 				t.is(path, 'testVar')
 				t.deepEqual(this.testVar, {id: 1, tested: true})
 				t.end()
-			},
-			'syncer-error'(path, error) {
+			})
+			this.$on('syncer-error', (path, error) => {
 				t.fail(error)
 				t.end()
-			}
+			})
 		}
 	})
 })
@@ -41,16 +41,16 @@ test.cb('Cleanup', t => {
 		sync: {
 			test: 'test'
 		},
-		events: {
-			'syncer-loaded'() {
+		created() {
+			this.$on('syncer-loaded', () => {
 				Vue.util.nextTick(() => {
 					instance.$destroy()
 				})
-			},
-			'syncer-error'(path, error) {
+			})
+			this.$on('syncer-error', (path, error) => {
 				t.fail(error)
 				t.end()
-			}
+			})
 		},
 		destroyed: function () {
 			function checkEventListenersAreEmpty(event) {
@@ -81,18 +81,20 @@ test.cb('Synced key can\'t be directly overwritten', t => {
 		sync: {
 			test: 'test'
 		},
-		events: {
-			'syncer-loaded'() {
-				this.test = 'Failed'
+		created() {
+			this.$on('syncer-loaded', () => {
+				Vue.util.nextTick(() => {
+					this.test = 'Failed'
 
-				t.not(this.test, 'Failed')
+					t.not(this.test, 'Failed')
 
-				t.end()
-			},
-			'syncer-error'(path, error) {
+					t.end()
+				})
+			})
+			this.$on('syncer-error', (path, error) => {
 				t.fail(error)
 				t.end()
-			}
+			})
 		}
 	})
 })

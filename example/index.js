@@ -23,4 +23,5 @@ Vue.use(VueSyncersFeathers, {
 Vue.prototype.$feathers = client
 
 // Create instance
-global.app = new Vue(App)
+const app = global.app = new Vue(App)
+app.$mount('#app')

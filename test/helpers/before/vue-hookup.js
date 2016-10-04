@@ -5,6 +5,7 @@ export function addVueWithPlugin(t, options) {
 	const Vue = t.context.Vue = BaseVue.extend()
 
 	// Because we're installing onto extended vue instance copy global methods to new instance
+	Vue.version = BaseVue.version
 	Vue.util = BaseVue.util
 	Vue.set = BaseVue.set
 	Vue.delete = BaseVue.delete

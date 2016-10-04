@@ -85,7 +85,7 @@ test('Undefined items set null and send error', async t => {
 test('Switching items', async t => {
 	const {instance, createSyncer} = t.context
 
-	instance.$set('variables.itemId', 1)
+	Vue.set(instance.variables, 'itemId', 1)
 	instance.$on('syncer-error', (path, error) => {
 		t.fail(error)
 	})

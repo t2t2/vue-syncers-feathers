@@ -47,15 +47,7 @@ function beforeCreate(Vue) {
 
 			// Add state that tells if all are loaded
 			Vue.util.defineReactive(this, '$loadingSyncers', true)
-
-			this.$watch(function () {
-				// If any are true
-				return some(this._syncers, syncer => {
-					return 'loading' in syncer ? syncer.loading : false
-				})
-			}, newVal => {
-				this.$loadingSyncers = newVal
-			}, {sync: true, immediate: true})
+			// The watcher for this is in created() as $watch doesn't work this early
 		} else {
 			// Never will change
 			this.$loadingSyncers = false
@@ -72,6 +64,18 @@ function created() {
 		Object.keys(this._syncers).forEach(key => {
 			this._syncers[key].ready()
 		})
+
+		if (Object.keys(this._syncers).length) {
+			// Watcher for $loadingSyncers
+			this.$watch(function () {
+				// If any are true
+				return some(this._syncers, syncer => {
+					return 'loading' in syncer ? syncer.loading : false
+				})
+			}, newVal => {
+				this.$loadingSyncers = newVal
+			}, {sync: true, immediate: true})
+		}
 	}
 }
 

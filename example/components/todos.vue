@@ -36,10 +36,10 @@
 				</ul>
 			</section>
 			<footer class="todo-footer">
-				{{remaining}} {{remaining | pluralize 'item'}} left
+				{{remaining}} {{pluralizeItems}} left
 			</footer>
 		</div>
-		<pre class="panel vars" v-text="todos | json"></pre>
+		<pre class="panel vars" v-text="todos"></pre>
 	</div>
 </template>
 
@@ -55,9 +55,6 @@
 			}
 		},
 		computed: {
-			remaining() {
-				return filter(this.todos, {completed: false}).length
-			},
 			allDone: {
 				get() {
 					return this.remaining === 0
@@ -70,6 +67,16 @@
 					})
 				},
 			},
+			pluralizeItems() {
+				if (this.remaining === 1) {
+					return 'item'
+				} else {
+					return 'items'
+				}
+			},
+			remaining() {
+				return filter(this.todos, {completed: false}).length
+			}
 		},
 		methods: {
 			addTodo() {
@@ -113,11 +120,11 @@
 			toggleTodo(event, todo) {
 				const newState = event.target.checked
 				return this.$feathers.service('todos').patch(todo.id, {completed: newState})
-			},
+			}
 		},
 		sync: {
 			todos: 'todos',
-		},
+		}
 	}
 </script>
 

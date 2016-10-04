@@ -3,13 +3,13 @@
 		<h1>vue-syncers-feathers demo page</h1>
 
 		<h2>Basic todo list</h2>
-		<todos v-ref:todos></todos>
+		<todos ref:todos></todos>
 
 		<h2>One item</h2>
-		<single v-ref:single></single>
+		<single ref:single></single>
 
 		<h2>Countries</h2>
-		<countries v-ref:countries></countries>
+		<countries ref:countries></countries>
 	</div>
 </template>
 
@@ -19,13 +19,11 @@
 	import Todos from './components/todos.vue'
 
 	export default {
-		el: '#app',
-
 		components: {
 			Countries,
 			Single,
-			Todos,
-		},
+			Todos
+		}
 	}
 </script>
 
