@@ -97,6 +97,11 @@ export default class ItemSyncer extends BaseSyncer {
 	 */
 	_loadState() {
 		return this.service.get(this.filters.id).then(item => {
+			if (this.vm === null) {
+				// destroy has been called during loading
+				return item
+			}
+
 			this._set(item)
 			this._newStateLoaded()
 

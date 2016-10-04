@@ -125,3 +125,16 @@ test('Deleted things are removed on the instance', async t => {
 
 	t.deepEqual(syncer.state, {2: {id: 2, otherItem: true}})
 })
+
+test('Handle destruction while loading', async t => {
+	const {createSyncer} = t.context
+
+	const syncer = createSyncer({
+		service: 'test'
+	})
+
+	const synced = syncer.ready()
+	syncer.destroy()
+	await synced
+})
+

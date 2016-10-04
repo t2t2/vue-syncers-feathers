@@ -119,6 +119,11 @@ export default class CollectionSyncer extends BaseSyncer {
 		}
 
 		return this.service.find(params).then(items => {
+			if (this.vm === null) {
+				// destroy has been called during loading
+				return items
+			}
+
 			items.forEach(item => {
 				this._set(item[this._id], item)
 			})

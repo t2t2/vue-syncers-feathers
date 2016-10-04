@@ -302,3 +302,18 @@ test('Custom id field', async t => {
 	t.falsy(syncer.loading)
 	t.deepEqual(syncer.state, {known: 1, id: 99, idTest: true})
 })
+
+test('Handle destruction while loading', async t => {
+	const {createSyncer} = t.context
+
+	const syncer = createSyncer({
+		service: 'test',
+		id: function () {
+			return 1
+		}
+	})
+
+	const synced = syncer.ready()
+	syncer.destroy()
+	await synced
+})

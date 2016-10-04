@@ -29,6 +29,7 @@ function cloneCustomiser(arg) {
 			return arg(...args)
 		}
 	}
+	return undefined
 }
 
 export class SocketIO extends BaseSocketIO {
