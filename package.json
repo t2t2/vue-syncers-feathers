@@ -45,7 +45,7 @@
     "babel-register": "^6.16.3",
     "babel-runtime": "^6.11.6",
     "body-parser": "^1.15.2",
-    "country-data": "0.0.29",
+    "country-data": "0.0.30",
     "coveralls": "^2.11.14",
     "cross-env": "^3.0.0",
     "css-loader": "^0.25.0",
