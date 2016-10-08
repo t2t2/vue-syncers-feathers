@@ -14,6 +14,8 @@ export default {
 	install: function (Vue, options = {}) {
 		Vue.$syncer = options
 		Vue.mixin(syncerMixin(Vue))
+		// Mixin handling
+		Vue.config.optionMergeStrategies.sync = Vue.config.optionMergeStrategies.props
 	},
 
 	query: {

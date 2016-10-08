@@ -6,11 +6,19 @@ import {Service} from 'feathers-memory'
 import ItemSyncer from '../src/syncers/item'
 
 import {addFeathersInstance, addBasicService, feathersCleanup} from './helpers/before/feathers-hookup'
-import {addVueInstance, vueCleanup} from './helpers/before/vue-hookup'
 
 test.beforeEach(addFeathersInstance)
 test.beforeEach(addBasicService)
-test.beforeEach(addVueInstance)
+test.beforeEach(t => {
+	t.context.instance = new Vue({
+		data: function () {
+			return {
+				// To avoid vue-warn for setting paths on vm
+				variables: {}
+			}
+		}
+	})
+})
 test.beforeEach(t => {
 	t.context.createSyncer = function (settings) {
 		return new ItemSyncer(Vue, t.context.instance, {feathers: t.context.client}, 'test', settings)
@@ -23,7 +31,12 @@ test.afterEach(t => {
 	}
 })
 test.afterEach(feathersCleanup)
-test.afterEach(vueCleanup)
+test.afterEach(t => {
+	if (t.context.instance) {
+		t.context.instance.$destroy()
+		delete t.context.instance
+	}
+})
 
 test('Get an item', async t => {
 	const {instance, createSyncer} = t.context

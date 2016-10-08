@@ -98,3 +98,49 @@ test.cb('Synced key can\'t be directly overwritten', t => {
 		}
 	})
 })
+
+test.cb('Syncer can be configured in mixins', t => {
+	const {Vue} = t.context
+
+	t.context.instance = new Vue({
+		mixins: [
+			{
+				sync: {
+					mixedIn: 'test',
+					overwritten: {
+						service: 'test',
+						id() {
+							return 2
+						}
+					}
+				}
+			}
+		],
+		sync: {
+			overwritten: {
+				service: 'test',
+				id() {
+					return 1
+				}
+			},
+			independant: 'test'
+		},
+		created() {
+			this.$on('syncer-loaded', () => {
+				if (this.$loadingSyncers) {
+					return // Wait for all
+				}
+
+				t.deepEqual(this.mixedIn, {1: {id: 1, tested: true}, 2: {id: 2, otherItem: true}})
+				t.deepEqual(this.overwritten, {id: 1, tested: true})
+				t.deepEqual(this.independant, {1: {id: 1, tested: true}, 2: {id: 2, otherItem: true}})
+				t.end()
+			})
+			this.$on('syncer-error', (path, error) => {
+				t.fail(error)
+				t.end()
+			})
+		}
+	})
+})
+

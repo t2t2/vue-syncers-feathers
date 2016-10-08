@@ -10,23 +10,13 @@ export function addVueWithPlugin(t, options) {
 	Vue.set = BaseVue.set
 	Vue.delete = BaseVue.delete
 	Vue.nextTick = BaseVue.nextTick
+	Vue.config = BaseVue.config // Not cloned
 	// To reference the right Vue instance
 	Vue.mixin = function (mixin) {
 		Vue.options = Vue.util.mergeOptions(Vue.options, mixin)
 	}
 
 	BaseVue.use.call(Vue, {install: VueSyncersFeathers.install}, options)
-}
-
-export function addVueInstance(t) {
-	t.context.instance = new BaseVue({
-		data: function () {
-			return {
-				// To avoid vue-warn for setting paths on vm
-				variables: {}
-			}
-		}
-	})
 }
 
 export function vueCleanup(t) {
