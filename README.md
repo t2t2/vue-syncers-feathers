@@ -36,7 +36,7 @@ Vue.use(VueSyncersFeathers, {
 * `feathers` **[REQUIRED]** - [feathers client](http://docs.feathersjs.com/clients/readme.html) instance
 * `idField` - Default idField value (see [syncer settings](#general-syncer-settings)), defaults to `id`
 
-**ADVANCED** - Most times you do not need these
+**ADVANCED** - Most of the time you do not need these
 
 * `driver` - Swapping out syncers with your own custom version. See `src/syncer.js`
 
