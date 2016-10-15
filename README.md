@@ -27,9 +27,7 @@ import Vue from 'vue'
 import VueSyncersFeathers from 'vue-syncers-feathers'
 
 Vue.use(VueSyncersFeathers, {
-	driverOptions: {
-		feathers: client,
-	},
+	feathers: client
 })
 ```
 
@@ -37,8 +35,7 @@ Vue.use(VueSyncersFeathers, {
 
 * `driver` **[ADVANCED]** - Swapping out driver that does fetching and keeping up to date with feathers server (Yes, you
 could technically write a driver for firebase/meteor/manual... and split the core off to it's own thing)
-* `driverOptions` - Options for feathers syncer:
-	* `feathers` **[REQUIRED]** - [feathers client](http://docs.feathersjs.com/clients/readme.html) instance
+* `feathers` **[REQUIRED]** - [feathers client](http://docs.feathersjs.com/clients/readme.html) instance
 
 ## Usage
 
@@ -67,11 +64,8 @@ export default {
 			service: 'users',
 			query() {
 				return {
-					username: {
-						// Note: not possible with default configuration feathers + vue-syncers-feathers
-						// Just imagine this limits users to whose username starts with t  
-						$like: 't%'
-					}
+					// All users where user.special === true
+					special: true
 				}
 			}
 		}
@@ -98,7 +92,7 @@ Returns on path object where keys are object IDs (empty if none matches/all dele
 
 #### Single item options (if id is set)
 
-* id: `function|string` function that returns the item ID to fetch. 
+* id: `function|string` function that returns the item ID to fetch.
 
 Returns on path the object which ID matches (or null on error/deletion)
 
