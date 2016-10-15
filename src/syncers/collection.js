@@ -125,7 +125,7 @@ export default class CollectionSyncer extends BaseSyncer {
 			}
 
 			this.state = this._initialState()
-			
+
 			items.forEach(item => {
 				this._set(item[this._id], item)
 			})
