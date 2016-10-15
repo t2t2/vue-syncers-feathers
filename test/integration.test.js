@@ -27,6 +27,7 @@ test.cb('Use single item syncer if requested', t => {
 				t.end()
 			})
 			this.$on('syncer-error', (path, error) => {
+				console.error(path, error)
 				t.fail(error)
 				t.end()
 			})

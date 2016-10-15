@@ -1,15 +1,16 @@
 import test from 'ava'
 
-import Vue from 'vue'
 import {Service} from 'feathers-memory'
 
 import ItemSyncer from '../src/syncers/item'
 
-import {addFeathersInstance, addBasicService, feathersCleanup} from './helpers/before/feathers-hookup'
+import {addBasicService} from './helpers/before/feathers-hookup'
+import {addVueAndFeathers, vueAndFeathersCleanup} from './helpers/before/feathers-and-vue-hookup'
 
-test.beforeEach(addFeathersInstance)
+test.beforeEach(addVueAndFeathers)
 test.beforeEach(addBasicService)
 test.beforeEach(t => {
+	const Vue = t.context.Vue
 	t.context.instance = new Vue({
 		data: function () {
 			return {
@@ -18,10 +19,9 @@ test.beforeEach(t => {
 			}
 		}
 	})
-})
-test.beforeEach(t => {
+
 	t.context.createSyncer = function (settings) {
-		return new ItemSyncer(Vue, t.context.instance, {feathers: t.context.client}, 'test', settings)
+		return new ItemSyncer(Vue, t.context.instance, 'test', settings)
 	}
 })
 
@@ -30,13 +30,7 @@ test.afterEach(t => {
 		t.context.syncer.destroy()
 	}
 })
-test.afterEach(feathersCleanup)
-test.afterEach(t => {
-	if (t.context.instance) {
-		t.context.instance.$destroy()
-		delete t.context.instance
-	}
-})
+test.afterEach(vueAndFeathersCleanup)
 
 test('Get an item', async t => {
 	const {instance, createSyncer} = t.context
@@ -96,7 +90,7 @@ test('Undefined items set null and send error', async t => {
 })
 
 test('Switching items', async t => {
-	const {instance, createSyncer} = t.context
+	const {instance, createSyncer, Vue} = t.context
 
 	Vue.set(instance.variables, 'itemId', 1)
 	instance.$on('syncer-error', (path, error) => {

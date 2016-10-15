@@ -14,9 +14,7 @@ client.configure(feathersIO(socket))
 // Install vue-syncers-feathers
 
 Vue.use(VueSyncersFeathers, {
-	driverOptions: {
-		feathers: client
-	}
+	feathers: client
 })
 
 // Convenience method to access feathers client in vue instances

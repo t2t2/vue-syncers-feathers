@@ -1,14 +1,14 @@
 import test from 'ava'
 
-import Vue from 'vue'
 import CollectionSyncer from '../src/syncers/collection'
 
-import {addFeathersInstance, addBasicService, feathersCleanup} from './helpers/before/feathers-hookup'
-import {vueCleanup} from './helpers/before/vue-hookup'
+import {addBasicService} from './helpers/before/feathers-hookup'
+import {addVueAndFeathers, vueAndFeathersCleanup} from './helpers/before/feathers-and-vue-hookup'
 
-test.beforeEach(addFeathersInstance)
+test.beforeEach(addVueAndFeathers)
 test.beforeEach(addBasicService)
 test.beforeEach(t => {
+	const Vue = t.context.Vue
 	t.context.instance = new Vue({
 		data: function () {
 			return {
@@ -19,7 +19,7 @@ test.beforeEach(t => {
 	})
 
 	t.context.createSyncer = function (settings) {
-		return new CollectionSyncer(Vue, t.context.instance, {feathers: t.context.client}, 'test', settings)
+		return new CollectionSyncer(Vue, t.context.instance, 'test', settings)
 	}
 })
 
@@ -28,8 +28,7 @@ test.afterEach(t => {
 		t.context.syncer.destroy()
 	}
 })
-test.afterEach(feathersCleanup)
-test.afterEach(vueCleanup)
+test.afterEach(vueAndFeathersCleanup)
 
 test('Get basic collection', async t => {
 	const {instance, createSyncer} = t.context

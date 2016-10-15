@@ -1,4 +1,3 @@
-import Syncer from './syncer'
 import {noop, some} from './utils'
 
 /**
@@ -26,14 +25,14 @@ function beforeCreate(Vue) {
 	return function () {
 		this._syncers = {}
 
-		const SyncCreator = Vue.$syncer.driver || Syncer
+		const SyncCreator = Vue.$syncer.driver
 		let synced = this.$options.sync
 		if (synced) {
 			// Set up each syncer
 			Object.keys(synced).forEach(key => {
 				const userDef = synced[key]
 
-				this._syncers[key] = new SyncCreator(Vue, this, Vue.$syncer.driverOptions || {}, key, userDef)
+				this._syncers[key] = new SyncCreator(Vue, this, key, userDef)
 
 				Object.defineProperty(this, key, {
 					get: () => {

@@ -4,7 +4,7 @@ import {addVueWithPlugin, vueCleanup} from './vue-hookup'
 
 export async function addVueAndFeathers(t) {
 	await addFeathersInstance(t)
-	addVueWithPlugin(t, {driverOptions: {feathers: t.context.client}})
+	addVueWithPlugin(t, {feathers: t.context.client})
 }
 
 export function vueAndFeathersCleanup(t) {

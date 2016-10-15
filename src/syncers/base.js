@@ -11,11 +11,7 @@ export default class BaseFeathersSyncer {
 	 * @param path
 	 * @param settings
 	 */
-	constructor(Vue, vm, driverOptions, path, settings) {
-		if (!('feathers' in driverOptions)) {
-			throw new Error('No feathers instance set on driver options')
-		}
-
+	constructor(Vue, vm, path, settings) {
 		this.Vue = Vue
 		this.vm = vm
 		this.path = path
@@ -29,7 +25,7 @@ export default class BaseFeathersSyncer {
 
 		this._id = 'idField' in settings ? settings.idField : 'id'
 
-		const client = driverOptions.feathers
+		const client = Vue.$syncer.feathers
 		this.service = client.service(this.settings.service)
 	}
 

@@ -16,7 +16,7 @@ function makeBaseDriver() {
 }
 
 test.beforeEach(t => {
-	addVueWithPlugin(t, {driver: makeBaseDriver()})
+	addVueWithPlugin(t, {driver: makeBaseDriver(), feathers: {}})
 })
 
 test.afterEach(vueCleanup)

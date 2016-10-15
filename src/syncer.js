@@ -6,12 +6,11 @@ import ItemSyncer from './syncers/item'
  *
  * @param Vue
  * @param vm
- * @param driverOptions
  * @param path
  * @param settings
  * @returns {BaseFeathersSyncer}
  */
-export default function syncerChooser(Vue, vm, driverOptions, path, settings) {
+export default function syncerChooser(Vue, vm, path, settings) {
 	if (typeof settings === 'string') {
 		settings = {
 			service: settings
@@ -20,7 +19,7 @@ export default function syncerChooser(Vue, vm, driverOptions, path, settings) {
 
 	// Choose syncer to use
 	if ('id' in settings) {
-		return new ItemSyncer(Vue, vm, driverOptions, path, settings)
+		return new ItemSyncer(Vue, vm, path, settings)
 	}
-	return new CollectionSyncer(Vue, vm, driverOptions, path, settings)
+	return new CollectionSyncer(Vue, vm, path, settings)
 }
