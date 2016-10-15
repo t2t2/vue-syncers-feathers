@@ -4,7 +4,8 @@ import {baseIgnoredKeys, baseSpecialFilters, createMatcher} from './query'
 import {warn} from './utils'
 
 const defaults = {
-	driver: Syncer
+	driver: Syncer,
+	idField: 'id'
 }
 
 export default {

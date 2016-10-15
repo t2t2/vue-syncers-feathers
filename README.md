@@ -36,6 +36,7 @@ Vue.use(VueSyncersFeathers, {
 * `driver` **[ADVANCED]** - Swapping out driver that does fetching and keeping up to date with feathers server (Yes, you
 could technically write a driver for firebase/meteor/manual... and split the core off to it's own thing)
 * `feathers` **[REQUIRED]** - [feathers client](http://docs.feathersjs.com/clients/readme.html) instance
+* `idField` - Default idField value (see [syncer settings](#general-syncer-settings)), defaults to `id`
 
 ## Usage
 
@@ -79,7 +80,7 @@ export default {
 key: path where the object will be (`vm.key`)  
 value: `string|object` Service to use, or options object for advanced use
 
-#### General
+#### General syncer settings
 
 * service: service to use (same as `feathers.service(value)`)
 * idField: ID field (defaults to `id`, only needed if you did the same server-side)
