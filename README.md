@@ -15,7 +15,7 @@
 
 ```js
 // Set up feathers client
-// You can do this whatever way you prefer, eg. feathers-client, or a more lightweight shim that exposes approtiate client.service(path)
+// You can do this whatever way you prefer, eg. feathers-client
 import feathers from 'feathers/client'
 import feathersIO from 'feathers-socketio/client'
 import io from 'socket.io-client'
@@ -78,24 +78,24 @@ export default {
 ### `sync` option object
 
 key: path where the object will be (`vm.key`)  
-value: `string|object` Service to use, or options object for advanced use
+value: `string|object` Service to use, or options object:
 
 #### General syncer settings
 
-* service: service to use (same as `feathers.service(value)`)
-* idField: ID field (defaults to `id`, only needed if you did the same server-side)
+* `service`: service to use (same as `feathers.service(value)`)
+* `idField`: ID field (defaults to `id`)
 
 #### Collection options (default)
 
 * query: `function|string` query to send to the server
 
-Returns on path object where keys are object IDs (empty if none matches/all deleted)
+`vm.key` will be object where keys are object IDs (empty if none matches/all deleted)
 
 #### Single item options (if id is set)
 
 * id: `function|string` function that returns the item ID to fetch.
 
-Returns on path the object which ID matches (or null on error/deletion)
+`vm.key` will be the object which ID matches (or null on error/deletion)
 
 ### Reactivity
 
@@ -126,12 +126,12 @@ instance.userId = 2 // loads user id = 2
 
 ### Instance properties
 
-* vm.$loadingSyncers (reactive) - true if any syncers are in loading state
+* `vm.$loadingSyncers` (reactive) - true if any syncers are in loading state
 
 ### Instance events
 
-* `syncer-loaded`(`path`) - Emitted when one of the syncers finishes loading it's data
-* `syncer-error`(`path`, `error`) - Emitted when one of the syncers results in error while loading it's data
+* `syncer-loaded(key)` - Emitted when one of the syncers finishes loading it's data
+* `syncer-error(key, error)` - Emitted when one of the syncers results in error while loading it's data
 
 ## FAQ
 
