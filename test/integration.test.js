@@ -202,7 +202,7 @@ test('Refresh syncers', t => {
 				}
 			},
 			created() {
-				const loaded = path => {
+				const loaded = () => {
 					if (this.$loadingSyncers) {
 						return // Wait for all
 					}
