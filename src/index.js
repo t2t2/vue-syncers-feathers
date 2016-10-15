@@ -21,6 +21,7 @@ export default {
 		const extend = Vue.util.extend
 		// Deprecation Warning: 0.3
 		// Deprecate: 0.4
+		/* istanbul ignore next */
 		if (options.driverOptions && options.driverOptions.feathers) {
 			if (process.env.NODE_ENV !== 'production') {
 				warn('Deprecation warning: driverOptions.feathers to be deprecated in favor of just feathers')
