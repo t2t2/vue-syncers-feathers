@@ -10,7 +10,7 @@ import {Server} from './mock-socket'
  * @param {String} url
  * @returns {Function}
  */
-export function localSocketer(url) {
+export default function localSocketer(url) {
 	return function () {
 		const app = this
 
