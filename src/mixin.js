@@ -65,7 +65,7 @@ function created() {
 			this._syncers[key].ready()
 		})
 
-		if (Object.keys(this._syncers).length) {
+		if (Object.keys(this._syncers).length > 0) {
 			// Watcher for $loadingSyncers
 			this.$watch(function () {
 				// If any are true

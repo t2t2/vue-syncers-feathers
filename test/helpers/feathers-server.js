@@ -1,7 +1,7 @@
 import feathers from 'feathers'
 import feathersClient from 'feathers/client'
 import feathersSocketIOclient from 'feathers-socketio/client'
-import {localSocketer} from './feathers-socket'
+import localSocketer from './feathers-socket'
 import {SocketIO} from './mock-socket'
 
 function localClient(url) {
