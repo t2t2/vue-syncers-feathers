@@ -12,7 +12,10 @@ export default function (Vue) {
 	return {
 		[initHook]: beforeCreate(Vue),
 		created: created(),
-		beforeDestroy: beforeDestroy()
+		beforeDestroy: beforeDestroy(),
+		methods: {
+			$refreshSyncers: refreshSyncers
+		}
 	}
 }
 
@@ -88,4 +91,21 @@ function beforeDestroy() {
 			delete this._syncers[key]
 		})
 	}
+}
+
+/**
+ * Refresh syncers state
+ *
+ * @param {string|string[]} [keys] - Syncers to refresh
+ */
+function refreshSyncers(keys) {
+	if (typeof keys === 'string') {
+		keys = [keys]
+	}
+	if (!keys) {
+		keys = Object.keys(this._syncers)
+	}
+	return Promise.all(keys.map(key => {
+		return this._syncers[key].refresh()
+	}))
 }

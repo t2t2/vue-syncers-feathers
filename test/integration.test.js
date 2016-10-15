@@ -145,3 +145,78 @@ test.cb('Syncer can be configured in mixins', t => {
 	})
 })
 
+test('Refresh syncers', t => {
+	const {service, Vue} = t.context
+
+	// Don't send out events, callService won't work here
+	service.filter(() => false)
+
+	let instance
+
+	async function runTests() {
+		// Patch all
+		await Promise.all([
+			service.patch(1, {updated: 1}),
+			service.patch(2, {updated: 1})
+		])
+
+		// Ensure update didn't get forwarded
+		t.deepEqual(instance.testCol, {1: {id: 1, tested: true}, 2: {id: 2, otherItem: true}})
+		t.deepEqual(instance.testVar, {id: 1, tested: true})
+
+		// Update one
+		await instance.$refreshSyncers('testCol')
+		t.deepEqual(instance.testCol, {1: {id: 1, tested: true, updated: 1}, 2: {id: 2, otherItem: true, updated: 1}})
+		t.deepEqual(instance.testVar, {id: 1, tested: true})
+
+		// Update array
+		await Promise.all([
+			service.patch(1, {updated: 2}),
+			service.patch(2, {updated: 2})
+		])
+		await instance.$refreshSyncers(['testCol', 'testVar'])
+		t.deepEqual(instance.testCol, {1: {id: 1, tested: true, updated: 2}, 2: {id: 2, otherItem: true, updated: 2}})
+		t.deepEqual(instance.testVar, {id: 1, tested: true, updated: 2})
+
+		// Update all
+		await Promise.all([
+			service.patch(1, {updated: 3}),
+			service.patch(2, {updated: 3})
+		])
+		await instance.$refreshSyncers()
+		t.deepEqual(instance.testCol, {1: {id: 1, tested: true, updated: 3}, 2: {id: 2, otherItem: true, updated: 3}})
+		t.deepEqual(instance.testVar, {id: 1, tested: true, updated: 3})
+	}
+
+	return new Promise((resolve, reject) => {
+		instance = t.context.instance = new Vue({
+			sync: {
+				testCol: {
+					service: 'test'
+				},
+				testVar: {
+					service: 'test',
+					id: function () {
+						return 1
+					}
+				}
+			},
+			created() {
+				const loaded = path => {
+					if (this.$loadingSyncers) {
+						return // Wait for all
+					}
+
+					this.$off('syncer-loaded', loaded)
+					resolve(runTests())
+				}
+
+				this.$on('syncer-loaded', loaded)
+				this.$on('syncer-error', (path, error) => {
+					console.error(path, error)
+					reject(error)
+				})
+			}
+		})
+	})
+})

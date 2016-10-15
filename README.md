@@ -33,10 +33,12 @@ Vue.use(VueSyncersFeathers, {
 
 ### Configuration
 
-* `driver` **[ADVANCED]** - Swapping out driver that does fetching and keeping up to date with feathers server (Yes, you
-could technically write a driver for firebase/meteor/manual... and split the core off to it's own thing)
 * `feathers` **[REQUIRED]** - [feathers client](http://docs.feathersjs.com/clients/readme.html) instance
 * `idField` - Default idField value (see [syncer settings](#general-syncer-settings)), defaults to `id`
+
+**ADVANCED** - Most times you do not need these
+
+* `driver` - Swapping out syncers with your own custom version. See `src/syncer.js`
 
 ## Usage
 
@@ -123,6 +125,12 @@ export default {
 
 instance.userId = 2 // loads user id = 2
 ```
+
+### Instance methods
+
+* `vm.$refreshSyncers([path])` - Refresh syncers on this instance. Path can be key or array of keys to refresh.
+If not set, all syncers are updated. Note that this does not need to be called after creating/updating/removing items
+unless [events have been disabled](https://docs.feathersjs.com/real-time/filtering.html).
 
 ### Instance properties
 

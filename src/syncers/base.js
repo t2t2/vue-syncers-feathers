@@ -56,6 +56,13 @@ export default class BaseFeathersSyncer {
 	}
 
 	/**
+	 * Refresh syncer's value
+	 */
+	refresh() {
+		return this._loadNewState()
+	}
+
+	/**
 	 * Handle errors loading the state
 	 *
 	 * @param error
