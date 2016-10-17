@@ -27,7 +27,7 @@ export default class BaseFeathersSyncer {
 		Vue.util.defineReactive(this, 'state', this._initialState())
 		Vue.util.defineReactive(this, 'loading', true)
 
-    	this._id = 'idField' in settings ? settings.idField : 'idField' in driverOptions ? driverOptions.idField : 'id'
+		this._id = 'idField' in settings ? settings.idField : 'idField' in driverOptions ? driverOptions.idField : 'id'
 
 		const client = driverOptions.feathers
 		this.service = client.service(this.settings.service)
