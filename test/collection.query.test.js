@@ -46,8 +46,6 @@ test('Get filtered collection', async t => {
 		}
 	})
 
-	t.plan(1)
-
 	await syncer.ready()
 
 	t.deepEqual(syncer.state, {2: {id: 2, otherItem: true}})
@@ -69,15 +67,13 @@ test('No results is just empty and no error', async t => {
 		}
 	})
 
-	t.plan(1)
-
 	await syncer.ready()
 
 	t.deepEqual(syncer.state, {})
 })
 
 test('Switching queries', async t => {
-	const {createSyncer, instance, Vue} = t.context
+	const {callService, createSyncer, instance, Vue} = t.context
 
 	Vue.set(instance.variables, 'query', {tested: true})
 	instance.$on('syncer-error', (path, error) => {
@@ -90,8 +86,6 @@ test('Switching queries', async t => {
 			return instance.variables.query
 		}
 	})
-
-	t.plan(6)
 
 	await syncer.ready()
 
@@ -107,6 +101,11 @@ test('Switching queries', async t => {
 	})
 
 	t.falsy(syncer.loading)
+	t.deepEqual(syncer.state, {})
+
+	// Ensure that updates don't get reflected
+	await callService('patch', 1, {another: 'yep'})
+
 	t.deepEqual(syncer.state, {})
 
 	// Change query

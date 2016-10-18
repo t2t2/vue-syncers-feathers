@@ -104,8 +104,6 @@ test('Switching items', async t => {
 		}
 	})
 
-	t.plan(6)
-
 	await syncer.ready()
 
 	t.falsy(syncer.loading)
@@ -182,8 +180,6 @@ test('Update item', async t => {
 		}
 	})
 
-	t.plan(3)
-
 	await syncer.ready()
 
 	t.falsy(syncer.loading)
@@ -208,8 +204,6 @@ test('Patch item', async t => {
 		}
 	})
 
-	t.plan(3)
-
 	await syncer.ready()
 
 	t.falsy(syncer.loading)
@@ -233,8 +227,6 @@ test('Delete item', async t => {
 			return 1
 		}
 	})
-
-	t.plan(3)
 
 	await syncer.ready()
 
@@ -261,8 +253,6 @@ test('Updates to other items don\'t affect the tracked item', async t => {
 			return 1
 		}
 	})
-
-	t.plan(3)
 
 	await syncer.ready()
 
@@ -301,8 +291,6 @@ test('Custom id field', async t => {
 		},
 		idField: 'known'
 	})
-
-	t.plan(2)
 
 	await syncer.ready()
 
