@@ -1,4 +1,4 @@
-import {warn} from '../utils'
+import {each, warn} from '../utils'
 
 export default class BaseFeathersSyncer {
 
@@ -33,8 +33,8 @@ export default class BaseFeathersSyncer {
 	 * Cleanup after oneself
 	 */
 	destroy() {
-		Object.keys(this.unwatchers).forEach(key => {
-			this.unwatchers[key]()
+		each(this.unwatchers, unwatcher => {
+			unwatcher()
 		})
 
 		this.state = this._initialState()

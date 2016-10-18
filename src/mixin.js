@@ -1,4 +1,4 @@
-import {noop, some} from './utils'
+import {each, noop, some} from './utils'
 
 /**
  * Install mixin onto the Vue instance
@@ -32,10 +32,8 @@ function beforeCreate(Vue) {
 		let synced = this.$options.sync
 		if (synced) {
 			// Set up each syncer
-			Object.keys(synced).forEach(key => {
-				const userDef = synced[key]
-
-				this._syncers[key] = new SyncCreator(Vue, this, key, userDef)
+			each(synced, (settings, key) => {
+				this._syncers[key] = new SyncCreator(Vue, this, key, settings)
 
 				Object.defineProperty(this, key, {
 					get: () => {
@@ -63,8 +61,8 @@ function beforeCreate(Vue) {
 function created() {
 	return function () {
 		// Start syncers
-		Object.keys(this._syncers).forEach(key => {
-			this._syncers[key].ready()
+		each(this._syncers, syncer => {
+			syncer.ready()
 		})
 
 		if (Object.keys(this._syncers).length > 0) {
@@ -86,8 +84,8 @@ function created() {
  */
 function beforeDestroy() {
 	return function () {
-		Object.keys(this._syncers).forEach(key => {
-			this._syncers[key].destroy()
+		each(this._syncers, (syncer, key) => {
+			syncer.destroy()
 			delete this._syncers[key]
 		})
 	}
