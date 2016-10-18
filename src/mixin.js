@@ -13,6 +13,9 @@ export default function (Vue) {
 		[initHook]: beforeCreate(Vue),
 		created: created(),
 		beforeDestroy: beforeDestroy(),
+		computed: {
+			$loadingSyncers: loadingStateGetter
+		},
 		methods: {
 			$refreshSyncers: refreshSyncers
 		}
@@ -44,13 +47,6 @@ function beforeCreate(Vue) {
 					configurable: true
 				})
 			})
-
-			// Add state that tells if all are loaded
-			Vue.util.defineReactive(this, '$loadingSyncers', true)
-			// The watcher for this is in created() as $watch doesn't work this early
-		} else {
-			// Never will change
-			this.$loadingSyncers = false
 		}
 	}
 }
@@ -64,18 +60,6 @@ function created() {
 		each(this._syncers, syncer => {
 			syncer.ready()
 		})
-
-		if (Object.keys(this._syncers).length > 0) {
-			// Watcher for $loadingSyncers
-			this.$watch(function () {
-				// If any are true
-				return some(this._syncers, syncer => {
-					return 'loading' in syncer ? syncer.loading : false
-				})
-			}, newVal => {
-				this.$loadingSyncers = newVal
-			}, {sync: true, immediate: true})
-		}
 	}
 }
 
@@ -89,6 +73,20 @@ function beforeDestroy() {
 			delete this._syncers[key]
 		})
 	}
+}
+
+/**
+ * Get loading state of the syncers
+ *
+ * @returns {boolean}
+ */
+function loadingStateGetter() {
+	if (Object.keys(this._syncers).length > 0) {
+		return some(this._syncers, syncer => {
+			return syncer.loading
+		})
+	}
+	return false
 }
 
 /**

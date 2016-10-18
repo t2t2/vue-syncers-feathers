@@ -100,5 +100,7 @@ test.cb('Non-used instances work fine', t => {
 			})
 		}
 	})
+	// No syncers = not loading
+	t.falsy(instance.$loadingSyncers)
 	instance.$destroy()
 })
