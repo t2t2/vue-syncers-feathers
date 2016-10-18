@@ -10,7 +10,6 @@ export default class CollectionSyncer extends BaseSyncer {
 	 *
 	 * @param Vue
 	 * @param vm
-	 * @param driverOptions
 	 * @param path
 	 * @param settings
 	 */

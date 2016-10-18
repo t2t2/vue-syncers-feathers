@@ -7,7 +7,6 @@ export default class BaseFeathersSyncer {
 	 *
 	 * @param Vue
 	 * @param vm
-	 * @param driverOptions
 	 * @param path
 	 * @param settings
 	 */
