@@ -11,8 +11,15 @@ const socket = io()
 const client = feathers()
 client.configure(feathersIO(socket))
 
-// Install vue-syncers-feathers
+// Patch in {$like: 'var'} ability to special filters
+require('feathers-commons/lib/utils').specialFilters.$like = function (key, value) {
+	value = value.toString().toLowerCase()
+	return function (current) {
+		return current[key].toString().toLowerCase().indexOf(value) !== -1
+	}
+}
 
+// Install vue-syncers-feathers
 Vue.use(VueSyncersFeathers, {
 	feathers: client
 })

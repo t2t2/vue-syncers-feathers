@@ -1,10 +1,25 @@
-import queryMatcher from '../query'
 import BaseSyncer from './base'
 
 /**
  * Collection syncer used for multiple items
  */
 export default class CollectionSyncer extends BaseSyncer {
+
+	/**
+	 * Create a syncer for feathers
+	 *
+	 * @param Vue
+	 * @param vm
+	 * @param driverOptions
+	 * @param path
+	 * @param settings
+	 */
+	constructor(Vue, vm, path, settings) {
+		super(Vue, vm, path, settings)
+
+		this._matcher = () => true // For without query
+		this._createMatcher = Vue.$syncer.matcher
+	}
 
 	/**
 	 * Handle new item creations from feathers
@@ -56,10 +71,12 @@ export default class CollectionSyncer extends BaseSyncer {
 
 				// Clear state (if now null it just makes sure)
 				this.state = this._initialState()
+				this._matcher = () => false
 
 				// Default return nothing
 				let returning = false
 				if (this.filters.query !== null) {
+					this._matcher = this._createMatcher(this.filters.query)
 					returning = this._loadNewState()
 				}
 
@@ -97,12 +114,7 @@ export default class CollectionSyncer extends BaseSyncer {
 	 * @private
 	 */
 	_itemMatches(item) {
-		if ('query' in this.filters) {
-			// Do more complex stuff here
-			return queryMatcher(item, this.filters.query)
-		}
-		// No filters
-		return true
+		return this._matcher(item)
 	}
 
 	/**

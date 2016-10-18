@@ -4,7 +4,7 @@ const bodyParser = require('body-parser')
 const socketio = require('feathers-socketio')
 const memory = require('feathers-memory')
 
-// Add like: 'var' ability to feathers-memory query
+// Patch in {like: 'var'} ability to feathers-memory query
 require('feathers-commons/lib/utils').specialFilters.$like = function (key, value) {
 	value = value.toString().toLowerCase()
 	return function (current) {

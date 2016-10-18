@@ -57,8 +57,9 @@
 					if (this.searchQuery) {
 						return {
 							name: {
-								$like: this.searchQuery,
-							},
+								// This uses a custom matcher on both server and client side
+								$like: this.searchQuery
+							}
 						}
 					} else {
 						return {}

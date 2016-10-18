@@ -9,6 +9,9 @@ import babel from 'rollup-plugin-babel'
 
 const config = {
 	entry: path.join(__dirname, '/src/index.js'),
+	external: [
+		'feathers-commons/lib/utils'
+	],
 	format: 'cjs',
 	plugins: [
 		babel({

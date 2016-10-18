@@ -9,9 +9,9 @@
 
 ## Setup
 
-### Webpack/Browserify
+`npm install vue-syncers-feathers feathers-commons --save`
 
-`npm install vue-syncers-feathers --save`
+### Webpack/Browserify
 
 ```js
 // Set up feathers client
@@ -35,6 +35,8 @@ Vue.use(VueSyncersFeathers, {
 
 * `feathers` **[REQUIRED]** - [feathers client](http://docs.feathersjs.com/clients/readme.html) instance
 * `idField` - Default idField value (see [syncer settings](#general-syncer-settings)), defaults to `id`
+* `matcher` - Function that creates a matcher used to check if an item matches the query.
+By default [feathers-commons](https://github.com/feathersjs/feathers-commons) matcher is used.
 
 **ADVANCED** - Most of the time you do not need these
 

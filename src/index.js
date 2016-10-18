@@ -1,11 +1,13 @@
+import {matcher} from 'feathers-commons/lib/utils'
+
 import Syncer from './syncer'
 import syncerMixin from './mixin'
-import {baseIgnoredKeys, baseSpecialFilters, createMatcher} from './query'
 import {warn} from './utils'
 
 const defaults = {
 	driver: Syncer,
-	idField: 'id'
+	idField: 'id',
+	matcher
 }
 
 export default {
@@ -17,6 +19,8 @@ export default {
 	 * @param {Object} options - Options
 	 * @param {Function} [options.driver] - Custom driver to use
 	 * @param {Object} [options.feathers] - Feathers client
+	 * @param {string} [options.idField] - Default ID field
+	 * @param {Function} [options.matcher] - Matcher creator
 	 */
 	install: function (Vue, options = {}) {
 		const extend = Vue.util.extend
@@ -40,11 +44,5 @@ export default {
 		Vue.mixin(syncerMixin(Vue))
 		// Mixin handling
 		Vue.config.optionMergeStrategies.sync = Vue.config.optionMergeStrategies.props
-	},
-
-	query: {
-		baseIgnoredKeys,
-		baseSpecialFilters,
-		createMatcher
 	}
 }
