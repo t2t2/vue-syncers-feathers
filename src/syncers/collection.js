@@ -137,6 +137,11 @@ export default class CollectionSyncer extends BaseSyncer {
 
 			this.state = this._initialState()
 
+			// if the service is paginated
+			if (Array.isArray(items) === false && typeof items.data !== 'undefined') {
+				items = items.data
+			}
+
 			items.forEach(item => {
 				this._set(item[this._id], item)
 			})
