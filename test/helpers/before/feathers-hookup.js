@@ -57,6 +57,38 @@ export function addBasicService(t) {
 	}
 }
 
+export function addPaginatedService(t) {
+	t.context.server.service('paginated', new Service({
+		paginate: {
+			default: 3,
+			max: 10
+		},
+		startId: 6,
+		store: cloneDeep({
+			1: {
+				id: 1,
+				item: 'first'
+			},
+			2: {
+				id: 2,
+				item: 'second'
+			},
+			3: {
+				id: 3,
+				item: 'third'
+			},
+			4: {
+				id: 4,
+				item: 'fourth'
+			},
+			5: {
+				id: 5,
+				item: 'fifth'
+			}
+		})
+	}))
+}
+
 export function feathersCleanup(t) {
 	t.context.server.io.close()
 }
