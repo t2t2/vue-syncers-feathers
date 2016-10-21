@@ -1,6 +1,6 @@
 {
   "name": "vue-syncers-feathers",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Synchronises feathers services with vue objects, updated in real time",
   "license": "MIT",
   "main": "dist/vue-syncers-feathers.common.js",
