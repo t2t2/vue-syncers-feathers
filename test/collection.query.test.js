@@ -118,6 +118,19 @@ test('Switching queries', async t => {
 
 	t.falsy(syncer.loading)
 	t.deepEqual(syncer.state, {2: {id: 2, otherItem: true}})
+
+	// Try to avoid re-querying whenver possible
+	instance.$once('syncer-loaded', () => {
+		t.fail('Queried again when test shouldn\'t')
+	})
+	instance.variables.query = {otherItem: true}
+	// Wait for watchers to do their thing
+	await new Promise(resolve => {
+		instance.$nextTick(() => {
+			resolve()
+		})
+	})
+	t.false(syncer.loading)
 })
 
 test('Creating items', async t => {

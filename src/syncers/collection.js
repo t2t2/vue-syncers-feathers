@@ -66,9 +66,14 @@ export default class CollectionSyncer extends BaseSyncer {
 
 			// When new value is found
 			const callback = function (newVal) {
+				// Avoid re-querying if it's the same
+				if (this.Vue.util.looseEqual(this.filters.query, newVal)) {
+					this.filters.query = newVal
+					return
+				}
 				this.filters.query = newVal
 
-				// Clear state (if now null it just makes sure)
+				// Clear state (if query is now null it makes sure everything's reset)
 				this.state = this._initialState()
 				this._matcher = () => false
 
