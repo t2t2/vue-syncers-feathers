@@ -86,18 +86,22 @@ value: `string|object` Service to use, or options object:
 
 #### General syncer settings
 
-* `service`: service to use (same as `feathers.service(value)`)
-* `idField`: ID field (defaults to `id`)
+* `service`: `string` service to use (same as `feathers.service(value)`)
+* `idField`: `string` ID field (defaults to `id`)
+* `loaded`: `function()` that will be executed when the syncer is loaded. This can happen multiple times (if data is loaded again).
+* `errored`:  `function(error)` that will be executed when the syncer loads an error. This can happen multiple times (if data is loaded again).
+
+To use loaded and error event handler on all syncers check [instance events](#instance-events)
 
 #### Collection options (default)
 
-* query: `function|string` query to send to the server
+* `query`: `function()|string` query to send to the server
 
 `vm.key` will be object where keys are object IDs (empty if none matches/all deleted)
 
 #### Single item options (if id is set)
 
-* id: `function|string` function that returns the item ID to fetch.
+* `id`: `function()|string` function that returns the item ID to fetch.
 
 `vm.key` will be the object which ID matches (or null on error/deletion)
 

@@ -18,6 +18,10 @@ export default class BaseFeathersSyncer {
 
 		this.filters = {}
 		this.unwatchers = {}
+		this.events = {
+			loaded: settings.loaded,
+			error: settings.errored
+		}
 
 		Vue.util.defineReactive(this, 'state', this._initialState())
 		Vue.util.defineReactive(this, 'loading', true)
@@ -69,7 +73,7 @@ export default class BaseFeathersSyncer {
 	 */
 	_handleStateLoadingError(error) {
 		this.loading = false
-		this.vm.$emit('syncer-error', this.path, error)
+		this._fireEvent('error', error)
 	}
 
 	/**
@@ -117,7 +121,18 @@ export default class BaseFeathersSyncer {
 	 */
 	_newStateLoaded() {
 		this.loading = false
-		this.vm.$emit('syncer-loaded', this.path)
+		this._fireEvent('loaded')
 	}
 
+	/**
+	 * Fire event on both listeners in settings and instance
+	 *
+	 * @private
+	 */
+	_fireEvent(event, ...args) {
+		if (event in this.events && this.events[event]) {
+			this.events[event].apply(this.vm, args)
+		}
+		this.vm.$emit(`syncer-${event}`, this.path, ...args)
+	}
 }

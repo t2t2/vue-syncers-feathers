@@ -220,3 +220,55 @@ test('Refresh syncers', t => {
 		})
 	})
 })
+
+test.cb('Events can be registerred on syncer settings', t => {
+	const {Vue} = t.context
+
+	t.plan(4)
+
+	const instance = t.context.instance = new Vue({
+		sync: {
+			passing: {
+				service: 'test',
+				id() {
+					return 1
+				},
+				loaded() {
+					t.deepEqual(instance.passing, {id: 1, tested: true})
+					t.is(this, instance)
+				},
+				errored(err) {
+					t.fail()
+				}
+			},
+			failing: {
+				service: 'test',
+				id() {
+					return 10
+				},
+				loaded() {
+					t.fail()
+				},
+				errored(err) {
+					t.pass()
+					t.is(this, instance)
+				}
+			}
+		},
+		created() {
+			var handleLoaded = () => {
+				if (this.$loadingSyncers) {
+					return // Wait for all
+				}
+
+				this.$nextTick(() => {
+					t.end()
+				})
+			}
+
+			this.$on('syncer-loaded', handleLoaded)
+			this.$on('syncer-error', handleLoaded)
+		}
+	})
+})
+
