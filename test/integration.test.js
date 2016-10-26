@@ -238,7 +238,7 @@ test.cb('Events can be registerred on syncer settings', t => {
 					t.is(this, instance)
 				},
 				errored(err) {
-					t.fail()
+					t.fail(err)
 				}
 			},
 			failing: {
@@ -250,7 +250,7 @@ test.cb('Events can be registerred on syncer settings', t => {
 					t.fail()
 				},
 				errored(err) {
-					t.pass()
+					t.pass(err)
 					t.is(this, instance)
 				}
 			}
