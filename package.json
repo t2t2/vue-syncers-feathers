@@ -61,7 +61,7 @@
     "feathers-socketio": "^1.4.1",
     "json-loader": "^0.5.4",
     "lodash": "^4.16.3",
-    "mock-socket": "^5.0.1",
+    "mock-socket": "^6.0.0",
     "npm-run-all": "^3.1.0",
     "nyc": "^8.3.0",
     "rimraf": "^2.5.4",
