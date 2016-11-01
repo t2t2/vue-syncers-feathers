@@ -1,3 +1,4 @@
+import filter from 'feathers-query-filters'
 import {matcher} from 'feathers-commons/lib/utils'
 
 import Syncer from './syncer'
@@ -6,6 +7,7 @@ import {warn} from './utils'
 
 const defaults = {
 	driver: Syncer,
+	filter,
 	idField: 'id',
 	matcher
 }

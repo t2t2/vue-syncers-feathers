@@ -1,3 +1,4 @@
+import {pick} from '../utils'
 import BaseSyncer from './base'
 
 /**
@@ -18,6 +19,7 @@ export default class CollectionSyncer extends BaseSyncer {
 
 		this._matcher = () => true // For without query
 		this._createMatcher = Vue.$syncer.matcher
+		this._filterParser = Vue.$syncer.filter
 	}
 
 	/**
@@ -71,7 +73,13 @@ export default class CollectionSyncer extends BaseSyncer {
 					this.filters.query = newVal
 					return
 				}
+
 				this.filters.query = newVal
+				if (newVal === null) {
+					this.filters.queryParsed = null
+				} else {
+					this.filters.queryParsed = this._filterParser(newVal)
+				}
 
 				// Clear state (if query is now null it makes sure everything's reset)
 				this.state = this._initialState()
@@ -164,6 +172,13 @@ export default class CollectionSyncer extends BaseSyncer {
 	 * @private
 	 */
 	_set(key, item) {
+		if (this.filters.queryParsed) {
+			const query = this.filters.queryParsed
+			if (query.$select) {
+				item = pick(item, ...query.$select)
+			}
+		}
+
 		this.Vue.set(this.state, key, item)
 	}
 

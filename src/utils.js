@@ -33,3 +33,19 @@ const numberRegex = /^\d+$/
 export function isNumericIDLike(value) {
 	return (typeof value !== 'number' && numberRegex.test(value))
 }
+
+/**
+ * Return object with only selected keys
+ *
+ * @from https://github.com/feathersjs/feathers-memory
+ * @param source
+ * @param keys
+ * @returns {object}
+ */
+export function pick(source, ...keys) {
+	const result = {}
+	for (let key of keys) {
+		result[key] = source[key]
+	}
+	return result
+}

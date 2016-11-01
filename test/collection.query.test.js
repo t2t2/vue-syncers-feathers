@@ -279,3 +279,51 @@ test('Removing items', async t => {
 
 	t.deepEqual(syncer.state, {})
 })
+
+// feathers-memory bug doesn't do $select correctly
+test.failing('$select', async t => {
+	const {callService, createSyncer, instance} = t.context
+
+	instance.$on('syncer-error', (path, error) => {
+		t.fail(error)
+	})
+
+	const syncer = t.context.syncer = createSyncer({
+		service: 'test',
+		query: function () {
+			return {
+				$select: ['id', 'tested']
+			}
+		}
+	})
+
+	await syncer.ready()
+
+	t.deepEqual(syncer.state, {1: {id: 1, tested: true}, 2: {id: 2}})
+
+	// Insert item
+	await callService('create', {
+		tested: 'created',
+		extra: false
+	})
+
+	t.deepEqual(syncer.state, {1: {id: 1, tested: true}, 2: {id: 2}, 3: {id: 3, tested: 'created'}})
+
+	// Update
+	await callService('update', 2, {
+		id: 2,
+		tested: 'updated',
+		otherItem: true
+	})
+
+	t.deepEqual(syncer.state, {1: {id: 1, tested: true}, 2: {id: 2, tested: 'updated'}, 3: {id: 3, tested: 'created'}})
+
+	// Patch
+	await callService('update', 2, {
+		id: 1,
+		tested: 'patched',
+		extraStuff: true
+	})
+
+	t.deepEqual(syncer.state, {1: {id: 1, tested: 'patched'}, 2: {id: 2, tested: 'updated'}, 3: {id: 3, tested: 'created'}})
+})

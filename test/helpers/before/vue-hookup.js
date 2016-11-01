@@ -1,6 +1,13 @@
 import BaseVue from 'vue'
 import VueSyncersFeathers from '../../../src'
 
+// If a vue error happens log extra info on the error
+BaseVue.config.errorHandler = function (err, vm) {
+	const t = Object.getPrototypeOf(vm).constructor.test
+	console.log('Test: ', t._test.title)
+	console.error(err)
+}
+
 export function addVueWithPlugin(t, options) {
 	const Vue = t.context.Vue = BaseVue.extend()
 
@@ -11,6 +18,7 @@ export function addVueWithPlugin(t, options) {
 	Vue.delete = BaseVue.delete
 	Vue.nextTick = BaseVue.nextTick
 	Vue.config = BaseVue.config // Not cloned
+	Vue.test = t
 	// To reference the right Vue instance
 	Vue.mixin = function (mixin) {
 		Vue.options = Vue.util.mergeOptions(Vue.options, mixin)
