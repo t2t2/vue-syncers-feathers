@@ -29,6 +29,7 @@ export default class CollectionSyncer extends BaseSyncer {
 	 */
 	onItemCreated(item) {
 		if (this._itemMatches(item)) {
+			item = this._transformPerQuery(item)
 			this._set(item[this._id], item)
 		}
 	}
@@ -40,6 +41,7 @@ export default class CollectionSyncer extends BaseSyncer {
 	 */
 	onItemUpdated(item) {
 		if (this._itemMatches(item)) {
+			item = this._transformPerQuery(item)
 			this._set(item[this._id], item)
 		} else if (item[this._id] in this.state) {
 			this._remove(item[this._id])
@@ -156,7 +158,7 @@ export default class CollectionSyncer extends BaseSyncer {
 			}
 
 			items.forEach(item => {
-				this._set(item[this._id], item, true)
+				this._set(item[this._id], item)
 			})
 			this._newStateLoaded()
 
@@ -169,17 +171,9 @@ export default class CollectionSyncer extends BaseSyncer {
 	 *
 	 * @param key
 	 * @param item
-	 * @param initialLoad {boolean} Initial data load (No need for transforms)
 	 * @private
 	 */
-	_set(key, item, initialLoad) {
-		if (this.filters.queryParsed && !initialLoad) {
-			const filters = this.filters.queryParsed.filters
-			if (filters.$select) {
-				item = pick(item, ...filters.$select)
-			}
-		}
-
+	_set(key, item) {
 		this.Vue.set(this.state, key, item)
 	}
 
@@ -190,5 +184,21 @@ export default class CollectionSyncer extends BaseSyncer {
 	 */
 	_remove(key) {
 		this.Vue.delete(this.state, key)
+	}
+
+	/**
+	 * Transform item using current filter's rules
+	 *
+	 * @param item
+	 * @private
+	 */
+	_transformPerQuery(item) {
+		if (this.filters.queryParsed) {
+			const filters = this.filters.queryParsed.filters
+			if (filters.$select) {
+				item = pick(item, ...filters.$select)
+			}
+		}
+		return item
 	}
 }
