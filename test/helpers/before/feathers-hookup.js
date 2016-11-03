@@ -46,8 +46,7 @@ export function addBasicService(t) {
 			}, 5000)
 			t.context.client.service('test').once(event, () => {
 				clearTimeout(failedTimeout)
-				// Allow other things to do what they need to with the event
-				setTimeout(resolve, 10)
+				resolve()
 			})
 		})
 
