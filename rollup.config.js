@@ -10,7 +10,8 @@ import babel from 'rollup-plugin-babel'
 const config = {
 	entry: path.join(__dirname, '/src/index.js'),
 	external: [
-		'feathers-commons/lib/utils'
+		'feathers-commons/lib/utils',
+		'feathers-query-filters'
 	],
 	format: 'cjs',
 	plugins: [
