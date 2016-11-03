@@ -280,8 +280,7 @@ test('Removing items', async t => {
 	t.deepEqual(syncer.state, {})
 })
 
-// feathers-memory bug doesn't do $select correctly
-test.failing('$select', async t => {
+test('$select', async t => {
 	const {callService, createSyncer, instance} = t.context
 
 	instance.$on('syncer-error', (path, error) => {
@@ -299,7 +298,8 @@ test.failing('$select', async t => {
 
 	await syncer.ready()
 
-	t.deepEqual(syncer.state, {1: {id: 1, tested: true}, 2: {id: 2}})
+	// Sockets usually strip undefined values but it's still a thing here
+	t.deepEqual(syncer.state, {1: {id: 1, tested: true}, 2: {id: 2, tested: undefined}})
 
 	// Insert item
 	await callService('create', {
@@ -307,7 +307,7 @@ test.failing('$select', async t => {
 		extra: false
 	})
 
-	t.deepEqual(syncer.state, {1: {id: 1, tested: true}, 2: {id: 2}, 3: {id: 3, tested: 'created'}})
+	t.deepEqual(syncer.state, {1: {id: 1, tested: true}, 2: {id: 2, tested: undefined}, 3: {id: 3, tested: 'created'}})
 
 	// Update
 	await callService('update', 2, {
@@ -319,8 +319,7 @@ test.failing('$select', async t => {
 	t.deepEqual(syncer.state, {1: {id: 1, tested: true}, 2: {id: 2, tested: 'updated'}, 3: {id: 3, tested: 'created'}})
 
 	// Patch
-	await callService('update', 2, {
-		id: 1,
+	await callService('patch', 1, {
 		tested: 'patched',
 		extraStuff: true
 	})

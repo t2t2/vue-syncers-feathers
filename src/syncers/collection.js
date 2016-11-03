@@ -156,7 +156,7 @@ export default class CollectionSyncer extends BaseSyncer {
 			}
 
 			items.forEach(item => {
-				this._set(item[this._id], item)
+				this._set(item[this._id], item, true)
 			})
 			this._newStateLoaded()
 
@@ -169,13 +169,14 @@ export default class CollectionSyncer extends BaseSyncer {
 	 *
 	 * @param key
 	 * @param item
+	 * @param initialLoad {boolean} Initial data load (No need for transforms)
 	 * @private
 	 */
-	_set(key, item) {
-		if (this.filters.queryParsed) {
-			const query = this.filters.queryParsed
-			if (query.$select) {
-				item = pick(item, ...query.$select)
+	_set(key, item, initialLoad) {
+		if (this.filters.queryParsed && !initialLoad) {
+			const filters = this.filters.queryParsed.filters
+			if (filters.$select) {
+				item = pick(item, ...filters.$select)
 			}
 		}
 

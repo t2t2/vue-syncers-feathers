@@ -39,7 +39,7 @@ Vue.use(VueSyncersFeathers, {
 **ADVANCED** - Most of the time you do not need these
 
 * `driver` - Swapping out syncers with your own custom version. See `src/syncer.js`
-* `filter` - Function that returns special filters from query.
+* `filter` - Function that parses the query for special filters.
 Check [feathers-query-filters](https://github.com/feathersjs/feathers-query-filters) for syntax.
 * `matcher` - Function that creates a matcher used to check if an item matches the query.
 By default [feathers-commons](https://github.com/feathersjs/feathers-commons) matcher is used.
