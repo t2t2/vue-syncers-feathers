@@ -156,7 +156,7 @@ unless [events have been disabled](https://docs.feathersjs.com/real-time/filteri
 For cleaner code you can enable the following aliases by setting `aliases` option true in the `Vue.use` call.
 Note that these aren't enabled by default to avoid conflicts with any other vue plugins you might be using.
 
-Alias | Is same as | Key for indivudal enabling
+Alias | Is same as | Key for individual enabling
 ---|---|---
 `vm.$loading` | `vm.$loadingSyncers` | `loading`
 `vm.$refresh()` | `vm.$refreshSyncers` | `refresh`
