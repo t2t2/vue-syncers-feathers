@@ -4,6 +4,7 @@
 
 [![Build Status](https://travis-ci.org/t2t2/vue-syncers-feathers.svg?branch=master)](https://travis-ci.org/t2t2/vue-syncers-feathers)
 [![Coverage Status](https://coveralls.io/repos/github/t2t2/vue-syncers-feathers/badge.svg?branch=master)](https://coveralls.io/github/t2t2/vue-syncers-feathers?branch=master)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/t2t2/vue-syncers-feathers/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/t2t2/vue-syncers-feathers/?branch=master)
 
 [Changelog on GitHub releases](https://github.com/t2t2/vue-syncers-feathers/releases)
 
