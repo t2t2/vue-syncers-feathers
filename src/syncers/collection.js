@@ -1,3 +1,4 @@
+import {pick} from '../utils'
 import BaseSyncer from './base'
 
 /**
@@ -18,6 +19,7 @@ export default class CollectionSyncer extends BaseSyncer {
 
 		this._matcher = () => true // For without query
 		this._createMatcher = Vue.$syncer.matcher
+		this._filterParser = Vue.$syncer.filter
 	}
 
 	/**
@@ -27,6 +29,7 @@ export default class CollectionSyncer extends BaseSyncer {
 	 */
 	onItemCreated(item) {
 		if (this._itemMatches(item)) {
+			item = this._transformPerQuery(item)
 			this._set(item[this._id], item)
 		}
 	}
@@ -38,6 +41,7 @@ export default class CollectionSyncer extends BaseSyncer {
 	 */
 	onItemUpdated(item) {
 		if (this._itemMatches(item)) {
+			item = this._transformPerQuery(item)
 			this._set(item[this._id], item)
 		} else if (item[this._id] in this.state) {
 			this._remove(item[this._id])
@@ -71,7 +75,13 @@ export default class CollectionSyncer extends BaseSyncer {
 					this.filters.query = newVal
 					return
 				}
+
 				this.filters.query = newVal
+				if (newVal === null) {
+					this.filters.queryParsed = null
+				} else {
+					this.filters.queryParsed = this._filterParser(newVal)
+				}
 
 				// Clear state (if query is now null it makes sure everything's reset)
 				this.state = this._initialState()
@@ -174,5 +184,21 @@ export default class CollectionSyncer extends BaseSyncer {
 	 */
 	_remove(key) {
 		this.Vue.delete(this.state, key)
+	}
+
+	/**
+	 * Transform item using current filter's rules
+	 *
+	 * @param item
+	 * @private
+	 */
+	_transformPerQuery(item) {
+		if (this.filters.queryParsed) {
+			const filters = this.filters.queryParsed.filters
+			if (filters.$select) {
+				item = pick(item, ...filters.$select)
+			}
+		}
+		return item
 	}
 }

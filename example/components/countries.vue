@@ -54,16 +54,16 @@
 			countries: {
 				service: 'countries',
 				query() {
-					if (this.searchQuery) {
-						return {
-							name: {
-								// This uses a custom matcher on both server and client side
-								$like: this.searchQuery
-							}
-						}
-					} else {
-						return {}
+					const query = {
+						$select: ['alpha2', 'alpha3', 'id', 'languages', 'name']
 					}
+					if (this.searchQuery) {
+						query.name = {
+							// This uses a custom matcher on both server and client side
+							$like: this.searchQuery
+						}
+					}
+					return query
 				}
 			}
 		},
