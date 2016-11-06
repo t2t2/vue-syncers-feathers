@@ -33,6 +33,7 @@ Vue.use(VueSyncersFeathers, {
 
 ### Configuration
 
+* `aliases` - [Enable shorter syntax](#aliases)
 * `feathers` **[REQUIRED]** - [feathers client](http://docs.feathersjs.com/clients/readme.html) instance
 * `idField` - Default idField value (see [syncer settings](#general-syncer-settings)), defaults to `id`
 
@@ -142,12 +143,66 @@ unless [events have been disabled](https://docs.feathersjs.com/real-time/filteri
 
 ### Instance properties
 
+* `vm.$feathers` - Feathers client
 * `vm.$loadingSyncers` (reactive) - true if any syncers are in loading state
 
 ### Instance events
 
 * `syncer-loaded(key)` - Emitted when one of the syncers finishes loading it's data
 * `syncer-error(key, error)` - Emitted when one of the syncers results in error while loading it's data
+
+## Aliases
+
+For cleaner code you can enable the following aliases by setting `aliases` option true in the `Vue.use` call.
+Note that these aren't enabled by default to avoid conflicts with any other vue plugins you might be using.
+
+Alias | Is same as | Key for indivudal enabling
+---|---|---
+`vm.$loading` | `vm.$loadingSyncers` | `loading`
+`vm.$refresh()` | `vm.$refreshSyncers` | `refresh`
+`vm.$service(name)` | `vm.$feathers.service(name)` | `service`
+
+```js
+// Enable all
+Vue.use(VueSyncersFeathers, {
+	aliases: true,
+	feathers: client
+})
+// Enable some
+Vue.use(VueSyncersFeathers, {
+	aliases: {
+		loading: true,
+		service: true
+	},
+	feathers: client
+})
+```
+
+Example component with aliases:
+
+```vue
+<template>
+	<div>
+		<div v-if="$loading">Loading...</div>
+		[...]
+	</div>
+</template>
+<script>
+export default {
+	methods: {
+		addNewUser(user) {
+			this.$service('users').create(user).then(() => {
+				//...
+			})
+		}
+	},
+	sync: {
+		users: 'users',
+	}
+}
+</script>
+
+```
 
 ## FAQ
 

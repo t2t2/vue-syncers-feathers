@@ -24,9 +24,6 @@ Vue.use(VueSyncersFeathers, {
 	feathers: client
 })
 
-// Convenience method to access feathers client in vue instances
-Vue.prototype.$feathers = client
-
 // Create instance
 const app = global.app = new Vue(App)
 app.$mount('#app')
