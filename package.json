@@ -12,7 +12,6 @@
   "scripts": {
     "build": "npm-run-all clean:dist build:*",
     "build:commonjs": "rollup -c",
-    "coveralls": "nyc report --reporter=text-lcov | coveralls",
     "ci:test": "npm-run-all lint coverage",
     "clean": "npm-run-all clean:*",
     "clean:dist": "rimraf dist/*.*",
@@ -51,7 +50,6 @@
     "babel-runtime": "^6.11.6",
     "body-parser": "^1.15.2",
     "country-data": "^0.0.31",
-    "coveralls": "^2.11.14",
     "cross-env": "^3.0.0",
     "css-loader": "^0.25.0",
     "feathers": "^2.0.2",
