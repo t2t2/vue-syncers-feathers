@@ -33,7 +33,7 @@
   "author": "t2t2 <taavot@gmail.com>",
   "repository": "t2t2/vue-syncers-feathers",
   "peerDependencies": {
-    "feathers-commons": "^0.7.5",
+    "feathers-commons": "^0.8.0",
     "feathers-query-filters": "^2.1.1"
   },
   "devDependencies": {
