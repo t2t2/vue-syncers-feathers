@@ -51,7 +51,7 @@
     "body-parser": "^1.15.2",
     "country-data": "^0.0.31",
     "cross-env": "^3.0.0",
-    "css-loader": "^0.25.0",
+    "css-loader": "^0.26.0",
     "feathers": "^2.0.2",
     "feathers-commons": "^0.7.5",
     "feathers-memory": "^1.0.0",
