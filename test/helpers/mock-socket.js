@@ -1,5 +1,5 @@
 import {SocketIO as BaseSocketIOConstructor, Server as BaseServer} from 'mock-socket'
-import {createMessageEvent} from 'mock-socket/dist/event-factory'
+import {createMessageEvent} from 'mock-socket/src/event-factory'
 import cloneDeepWith from 'lodash/cloneDeepWith'
 
 export class Server extends BaseServer {

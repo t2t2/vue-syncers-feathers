@@ -1,9 +1,23 @@
 {
-  "presets": ["latest-minimal"],
-  "plugins": ["add-module-exports", "transform-runtime"],
-  "env": {
-    "test": {
-      "plugins": ["istanbul"]
-    }
-  }
+	"presets": [
+		[
+			"env",
+			{
+				"targets": {
+					"node": true
+				}
+			}
+		]
+	],
+	"plugins": [
+		"add-module-exports",
+		"transform-runtime"
+	],
+	"env": {
+		"test": {
+			"plugins": [
+				"istanbul"
+			]
+		}
+	}
 }
