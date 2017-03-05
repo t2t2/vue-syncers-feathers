@@ -58,7 +58,7 @@ test.cb('Syncer lifecycle methods are called in right order', t => {
 			// no ready in node mode
 			t.is(order++, 3, 'Vue instance is ready')
 
-			Vue.util.nextTick(function () {
+			Vue.nextTick(function () {
 				instance.$destroy()
 			})
 		},
@@ -70,11 +70,11 @@ test.cb('Syncer lifecycle methods are called in right order', t => {
 		destroyed: function () {
 			t.is(order++, 6, 'Vue instance is destroyed')
 
-			Vue.util.nextTick(function () {
+			Vue.nextTick(function () {
 				// Make sure hook doesn't cause double cleanup for any weird reason
 				instance.$destroy()
 
-				Vue.util.nextTick(function () {
+				Vue.nextTick(function () {
 					t.end()
 				})
 			})
@@ -95,7 +95,7 @@ test.cb('Non-used instances work fine', t => {
 		destroyed: function () {
 			t.pass()
 
-			Vue.util.nextTick(function () {
+			Vue.nextTick(function () {
 				t.end()
 			})
 		}

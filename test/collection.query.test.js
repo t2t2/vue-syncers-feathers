@@ -95,7 +95,7 @@ test('Switching queries', async t => {
 	// Null query: just cleared
 	await new Promise(resolve => {
 		instance.variables.query = null
-		Vue.util.nextTick(() => {
+		Vue.nextTick(() => {
 			resolve()
 		})
 	})

@@ -112,7 +112,7 @@ test('Switching items', async t => {
 	// Test null id (should just clear the target)
 	await new Promise(resolve => {
 		instance.variables.itemId = null
-		Vue.util.nextTick(() => {
+		Vue.nextTick(() => {
 			resolve()
 		})
 	})

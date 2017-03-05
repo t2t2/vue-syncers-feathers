@@ -12,30 +12,20 @@ module.exports = {
 		publicPath: '/'
 	},
 	module: {
-		loaders: [
+		rules: [
 			{
 				test: /\.vue$/,
-				loader: 'vue'
-			},
-			{ // Needed for feathers/client
-				test: /\.json$/,
-				loader: 'json'
+				use: 'vue-loader'
 			},
 			{
 				test: /\.js$/,
 				exclude: /node_modules/,
-				loader: 'babel',
-				query: {
-					presets: ['latest'],
-					plugins: ['transform-runtime']
-				}
+				use: 'babel-loader'
 			}
 		]
 	},
 	plugins: [
-		new webpack.optimize.OccurenceOrderPlugin(),
 		new webpack.HotModuleReplacementPlugin(),
-		new webpack.NoErrorsPlugin(),
 		new webpack.DefinePlugin({
 			'process.env': {
 				NODE_ENV: '"development"'

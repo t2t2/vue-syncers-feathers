@@ -12,6 +12,7 @@
   "scripts": {
     "build": "npm-run-all clean:dist build:*",
     "build:commonjs": "rollup -c",
+    "build:esm": "rollup -c",
     "ci:test": "npm-run-all lint coverage",
     "clean": "npm-run-all clean:*",
     "clean:dist": "rimraf dist/*.*",
@@ -75,7 +76,7 @@
     "vue-loader": "^11.0.0",
     "vue-style-loader": "^2.0.0",
     "vue-template-compiler": "^2.1.8",
-    "webpack": "^1.14.0",
+    "webpack": "^2.2.1",
     "webpack-dev-middleware": "^1.9.0",
     "webpack-hot-middleware": "^2.14.0",
     "xo": "^0.17.1"

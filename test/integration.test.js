@@ -44,7 +44,7 @@ test.cb('Cleanup', t => {
 		},
 		created() {
 			this.$on('syncer-loaded', () => {
-				Vue.util.nextTick(() => {
+				Vue.nextTick(() => {
 					instance.$destroy()
 				})
 			})
@@ -84,7 +84,7 @@ test.cb('Synced key can\'t be directly overwritten', t => {
 		},
 		created() {
 			this.$on('syncer-loaded', () => {
-				Vue.util.nextTick(() => {
+				Vue.nextTick(() => {
 					this.test = 'Failed'
 
 					t.not(this.test, 'Failed')

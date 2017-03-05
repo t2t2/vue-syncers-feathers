@@ -13,30 +13,33 @@ const config = {
 		'feathers-commons/lib/utils',
 		'feathers-query-filters'
 	],
-	format: 'cjs',
 	plugins: [
 		babel({
 			presets: [
-				[
-					'latest',
-					{
-						es2015: {
-							modules: false
-						}
-					}
-				]
+				['env', {
+					targets: {
+						browsers: '> 1%, Last 2 versions, IE 9' // Based on vue's requirements
+					},
+					modules: false,
+					loose: true
+				}]
 			],
 			plugins: [
 				'external-helpers'
 			],
 			babelrc: false
 		})
-	],
-	dest: path.join(__dirname, '/dist/vue-syncers-feathers.common.js')
+	]
 }
 
 if (process.env.npm_lifecycle_event === 'build:commonjs') {
 	// Common.js build
+	config.format = 'cjs'
+	config.dest = path.join(__dirname, '/dist/vue-syncers-feathers.common.js')
+} else if (process.env.npm_lifecycle_event === 'build:esm') {
+	// Common.js build
+	config.format = 'es'
+	config.dest = path.join(__dirname, '/dist/vue-syncers-feathers.esm.js')
 }
 
 export default config
