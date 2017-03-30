@@ -52,7 +52,7 @@
     "body-parser": "^1.15.2",
     "country-data": "^0.0.31",
     "cross-env": "^3.1.4",
-    "css-loader": "^0.27.0",
+    "css-loader": "^0.28.0",
     "feathers": "^2.0.3",
     "feathers-commons": "^0.8.7",
     "feathers-memory": "^1.0.1",
