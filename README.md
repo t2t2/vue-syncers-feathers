@@ -21,7 +21,7 @@ import feathers from 'feathers/client'
 import feathersIO from 'feathers-socketio/client'
 import io from 'socket.io-client'
 const socket = io()
-const client = feathers().configure(feathers.socketio(socket))
+const client = feathers().configure(feathersIO(socket))
 
 // Set up vue & VueSyncersFeathers
 import Vue from 'vue'
