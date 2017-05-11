@@ -51,7 +51,7 @@
     "babel-runtime": "^6.20.0",
     "body-parser": "^1.15.2",
     "country-data": "^0.0.31",
-    "cross-env": "^4.0.0",
+    "cross-env": "^5.0.0",
     "css-loader": "^0.28.0",
     "feathers": "^2.0.3",
     "feathers-commons": "^0.8.7",
