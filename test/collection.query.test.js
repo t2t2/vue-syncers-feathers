@@ -10,7 +10,7 @@ test.beforeEach(addBasicService)
 test.beforeEach(t => {
 	const Vue = t.context.Vue
 	t.context.instance = new Vue({
-		data: function () {
+		data() {
 			return {
 				// To avoid vue-warn for setting paths on vm
 				variables: {}
@@ -37,14 +37,15 @@ test('Get filtered collection', async t => {
 		t.fail(error)
 	})
 
-	const syncer = t.context.syncer = createSyncer({
+	const syncer = createSyncer({
 		service: 'test',
-		query: function () {
+		query() {
 			return {
 				otherItem: true
 			}
 		}
 	})
+	t.context.syncer = syncer
 
 	await syncer.ready()
 
@@ -58,14 +59,15 @@ test('No results is just empty and no error', async t => {
 		t.fail(error)
 	})
 
-	const syncer = t.context.syncer = createSyncer({
+	const syncer = createSyncer({
 		service: 'test',
-		query: function () {
+		query() {
 			return {
 				noItems: true
 			}
 		}
 	})
+	t.context.syncer = syncer
 
 	await syncer.ready()
 
@@ -80,12 +82,13 @@ test('Switching queries', async t => {
 		t.fail(error)
 	})
 
-	const syncer = t.context.syncer = createSyncer({
+	const syncer = createSyncer({
 		service: 'test',
-		query: function () {
+		query() {
 			return instance.variables.query
 		}
 	})
+	t.context.syncer = syncer
 
 	await syncer.ready()
 
@@ -140,18 +143,19 @@ test('Creating items', async t => {
 		t.fail(error)
 	})
 
-	const syncer = t.context.syncer = createSyncer({
+	const syncer = createSyncer({
 		service: 'test',
-		query: function () {
+		query() {
 			return {
 				tested: true
 			}
 		}
 	})
+	t.context.syncer = syncer
 
 	await syncer.ready()
 
-	let should = {1: {id: 1, tested: true}}
+	const should = {1: {id: 1, tested: true}}
 
 	t.deepEqual(syncer.state, should)
 
@@ -174,14 +178,15 @@ test('Updating items', async t => {
 		t.fail(error)
 	})
 
-	const syncer = t.context.syncer = createSyncer({
+	const syncer = createSyncer({
 		service: 'test',
-		query: function () {
+		query() {
 			return {
 				tested: true
 			}
 		}
 	})
+	t.context.syncer = syncer
 
 	await syncer.ready()
 
@@ -215,14 +220,15 @@ test('Patching items', async t => {
 		t.fail(error)
 	})
 
-	const syncer = t.context.syncer = createSyncer({
+	const syncer = createSyncer({
 		service: 'test',
-		query: function () {
+		query() {
 			return {
 				tested: true
 			}
 		}
 	})
+	t.context.syncer = syncer
 
 	await syncer.ready()
 
@@ -256,14 +262,15 @@ test('Removing items', async t => {
 		t.fail(error)
 	})
 
-	const syncer = t.context.syncer = createSyncer({
+	const syncer = createSyncer({
 		service: 'test',
-		query: function () {
+		query() {
 			return {
 				tested: true
 			}
 		}
 	})
+	t.context.syncer = syncer
 
 	await syncer.ready()
 
@@ -287,14 +294,15 @@ test('$select', async t => {
 		t.fail(error)
 	})
 
-	const syncer = t.context.syncer = createSyncer({
+	const syncer = createSyncer({
 		service: 'test',
-		query: function () {
+		query() {
 			return {
 				$select: ['id', 'tested']
 			}
 		}
 	})
+	t.context.syncer = syncer
 
 	await syncer.ready()
 

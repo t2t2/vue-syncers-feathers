@@ -32,7 +32,7 @@ function beforeCreate(Vue) {
 		this._syncers = {}
 
 		const SyncCreator = Vue.$syncer.driver
-		let synced = this.$options.sync
+		const synced = this.$options.sync
 		if (synced) {
 			// Set up each syncer
 			each(synced, (settings, key) => {

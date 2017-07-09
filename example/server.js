@@ -32,17 +32,17 @@ app.service('todos', memory({
 }))
 
 app.service('countries', memory({
-/*	paginate: {
+/*	Paginate: {
 		default: 25,
 		max: 50,
 	}, */
 }))
 
 // Webpack server
-var webpack = require('webpack')
-var webpackConfig = require('./webpack.config')
+const webpack = require('webpack')
+const webpackConfig = require('./webpack.config')
 
-var compiler = webpack(webpackConfig)
+const compiler = webpack(webpackConfig)
 
 app.use(require('webpack-dev-middleware')(compiler, {
 	publicPath: webpackConfig.output.publicPath,
@@ -59,6 +59,6 @@ app.use('/', feathers.static(__dirname))
 // Seed with data
 app.service('countries').create(require('country-data').countries.all)
 
-app.listen(8030, function () {
+app.listen(8030, () => {
 	console.log('Serving examples on http://localhost:8030')
 })

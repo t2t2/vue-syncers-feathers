@@ -44,7 +44,7 @@ export function isNumericIDLike(value) {
  */
 export function pick(source, ...keys) {
 	const result = {}
-	for (let key of keys) {
+	for (const key of keys) {
 		result[key] = source[key]
 	}
 	return result
@@ -76,7 +76,7 @@ export function looseEqual(a, b) {
 		try {
 			return JSON.stringify(a) === JSON.stringify(b)
 		} catch (err) {
-			// possible circular reference
+			// Possible circular reference
 			return a === b
 		}
 	} else if (!isObjectA && !isObjectB) {

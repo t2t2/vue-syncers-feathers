@@ -13,8 +13,8 @@ export class Server extends BaseServer {
 }
 
 // SocketIO class isn't exposed
-let serverInstance = new Server('dummy')
-let instance = new BaseSocketIOConstructor('dummy')
+const serverInstance = new Server('dummy')
+const instance = new BaseSocketIOConstructor('dummy')
 const BaseSocketIO = Object.getPrototypeOf(instance).constructor
 instance.on('connect', () => {
 	instance.close()

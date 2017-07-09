@@ -12,7 +12,7 @@ test.beforeEach(addBasicService)
 test.beforeEach(t => {
 	const Vue = t.context.Vue
 	t.context.instance = new Vue({
-		data: function () {
+		data() {
 			return {
 				// To avoid vue-warn for setting paths on vm
 				variables: {}
@@ -39,12 +39,13 @@ test('Get an item', async t => {
 		t.fail(error)
 	})
 
-	const syncer = t.context.syncer = createSyncer({
+	const syncer = createSyncer({
 		service: 'test',
-		id: function () {
+		id() {
 			return 1
 		}
 	})
+	t.context.syncer = syncer
 
 	t.plan(4)
 
@@ -52,7 +53,7 @@ test('Get an item', async t => {
 	t.truthy(syncer.loading)
 
 	instance.$once('syncer-loaded', path => {
-		// correct path
+		// Correct path
 		t.is(path, 'test')
 	})
 
@@ -69,12 +70,13 @@ test('Undefined items set null and send error', async t => {
 		t.fail('Loaded something')
 	})
 
-	const syncer = t.context.syncer = createSyncer({
+	const syncer = createSyncer({
 		service: 'test',
-		id: function () {
+		id() {
 			return 3
 		}
 	})
+	t.context.syncer = syncer
 
 	t.plan(4)
 
@@ -97,12 +99,13 @@ test('Switching items', async t => {
 		t.fail(error)
 	})
 
-	const syncer = t.context.syncer = createSyncer({
+	const syncer = createSyncer({
 		service: 'test',
-		id: function () {
+		id() {
 			return instance.variables.itemId
 		}
 	})
+	t.context.syncer = syncer
 
 	await syncer.ready()
 
@@ -143,12 +146,13 @@ test('Creating items', async t => {
 		t.fail('Loaded something')
 	})
 
-	const syncer = t.context.syncer = createSyncer({
+	const syncer = createSyncer({
 		service: 'test',
-		id: function () {
+		id() {
 			return 3
 		}
 	})
+	t.context.syncer = syncer
 
 	t.plan(3)
 
@@ -173,12 +177,13 @@ test('Update item', async t => {
 		t.fail(error)
 	})
 
-	const syncer = t.context.syncer = createSyncer({
+	const syncer = createSyncer({
 		service: 'test',
-		id: function () {
+		id() {
 			return 1
 		}
 	})
+	t.context.syncer = syncer
 
 	await syncer.ready()
 
@@ -197,12 +202,13 @@ test('Patch item', async t => {
 		t.fail(error)
 	})
 
-	const syncer = t.context.syncer = createSyncer({
+	const syncer = createSyncer({
 		service: 'test',
-		id: function () {
+		id() {
 			return 1
 		}
 	})
+	t.context.syncer = syncer
 
 	await syncer.ready()
 
@@ -221,12 +227,13 @@ test('Delete item', async t => {
 		t.fail(error)
 	})
 
-	const syncer = t.context.syncer = createSyncer({
+	const syncer = createSyncer({
 		service: 'test',
-		id: function () {
+		id() {
 			return 1
 		}
 	})
+	t.context.syncer = syncer
 
 	await syncer.ready()
 
@@ -247,12 +254,13 @@ test('Updates to other items don\'t affect the tracked item', async t => {
 
 	await service.create([{premade: true}, {anotherPremade: true}])
 
-	const syncer = t.context.syncer = createSyncer({
+	const syncer = createSyncer({
 		service: 'test',
-		id: function () {
+		id() {
 			return 1
 		}
 	})
+	t.context.syncer = syncer
 
 	await syncer.ready()
 
@@ -284,13 +292,14 @@ test('Custom id field', async t => {
 		}
 	}))
 
-	const syncer = t.context.syncer = createSyncer({
+	const syncer = createSyncer({
 		service: 'custom',
-		id: function () {
+		id() {
 			return 1
 		},
 		idField: 'known'
 	})
+	t.context.syncer = syncer
 
 	await syncer.ready()
 
@@ -303,7 +312,7 @@ test('Handle destruction while loading', async t => {
 
 	const syncer = createSyncer({
 		service: 'test',
-		id: function () {
+		id() {
 			return 1
 		}
 	})
@@ -311,4 +320,6 @@ test('Handle destruction while loading', async t => {
 	const synced = syncer.ready()
 	syncer.destroy()
 	await synced
+
+	t.pass()
 })

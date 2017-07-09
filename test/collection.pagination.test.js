@@ -10,7 +10,7 @@ test.beforeEach(addPaginatedService)
 test.beforeEach(t => {
 	const Vue = t.context.Vue
 	t.context.instance = new Vue({
-		data: function () {
+		data() {
 			return {
 				// To avoid vue-warn for setting paths on vm
 				variables: {}
@@ -37,7 +37,7 @@ test('Basic handling of pagination', async t => {
 		t.fail(error)
 	})
 
-	const syncer = t.context.syncer = createSyncer({
+	const syncer = createSyncer({
 		service: 'paginated',
 		query() {
 			return {
@@ -45,6 +45,7 @@ test('Basic handling of pagination', async t => {
 			}
 		}
 	})
+	t.context.syncer = syncer
 
 	t.plan(4)
 
@@ -52,7 +53,7 @@ test('Basic handling of pagination', async t => {
 	t.truthy(syncer.loading)
 
 	instance.$once('syncer-loaded', path => {
-		// correct path
+		// Correct path
 		t.is(path, 'test')
 	})
 

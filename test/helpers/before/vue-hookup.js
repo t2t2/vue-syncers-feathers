@@ -9,7 +9,8 @@ BaseVue.config.errorHandler = function (err, vm) {
 }
 
 export function addVueWithPlugin(t, options) {
-	const Vue = t.context.Vue = BaseVue.extend()
+	const Vue = BaseVue.extend()
+	t.context.Vue = Vue
 
 	// Because we're installing onto extended vue instance copy global methods to new instance
 	Vue.version = BaseVue.version

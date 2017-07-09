@@ -6,7 +6,7 @@ import {SocketIO} from './mock-socket'
 
 function localClient(url) {
 	const connection = new SocketIO(url)
-	// fool feathers into thinking it's socketio
+	// Fool feathers into thinking it's socketio
 	connection.io = true
 
 	return feathersSocketIOclient(connection)

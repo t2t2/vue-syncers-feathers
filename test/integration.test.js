@@ -15,7 +15,7 @@ test.cb('Use single item syncer if requested', t => {
 		sync: {
 			testVar: {
 				service: 'test',
-				id: function () {
+				id() {
 					return 1
 				}
 			}
@@ -38,7 +38,7 @@ test.cb('Use single item syncer if requested', t => {
 test.cb('Cleanup', t => {
 	const {client, Vue} = t.context
 
-	const instance = t.context.instance = new Vue({
+	const instance = new Vue({
 		sync: {
 			test: 'test'
 		},
@@ -53,7 +53,7 @@ test.cb('Cleanup', t => {
 				t.end()
 			})
 		},
-		destroyed: function () {
+		destroyed() {
 			function checkEventListenersAreEmpty(event) {
 				if (client.io.listeners['test ' + event]) {
 					t.is(client.io.listeners['test ' + event].length, 0)
@@ -67,12 +67,13 @@ test.cb('Cleanup', t => {
 			checkEventListenersAreEmpty('patched')
 			checkEventListenersAreEmpty('removed')
 
-			// syncer value is null after deletion
+			// Syncer value is null after deletion
 			t.deepEqual(this.test, null)
 
 			t.end()
 		}
 	})
+	t.context.instance = instance
 })
 
 test.cb('Synced key can\'t be directly overwritten', t => {
@@ -189,14 +190,14 @@ test('Refresh syncers', t => {
 	}
 
 	return new Promise((resolve, reject) => {
-		instance = t.context.instance = new Vue({
+		instance = new Vue({
 			sync: {
 				testCol: {
 					service: 'test'
 				},
 				testVar: {
 					service: 'test',
-					id: function () {
+					id() {
 						return 1
 					}
 				}
@@ -218,6 +219,7 @@ test('Refresh syncers', t => {
 				})
 			}
 		})
+		t.context.instance = instance
 	})
 })
 
@@ -226,7 +228,7 @@ test.cb('Events can be registerred on syncer settings', t => {
 
 	t.plan(4)
 
-	const instance = t.context.instance = new Vue({
+	const instance = new Vue({
 		sync: {
 			passing: {
 				service: 'test',
@@ -256,7 +258,7 @@ test.cb('Events can be registerred on syncer settings', t => {
 			}
 		},
 		created() {
-			var handleLoaded = () => {
+			const handleLoaded = () => {
 				if (this.$loadingSyncers) {
 					return // Wait for all
 				}
@@ -270,5 +272,6 @@ test.cb('Events can be registerred on syncer settings', t => {
 			this.$on('syncer-error', handleLoaded)
 		}
 	})
+	t.context.instance = instance
 })
 

@@ -50,31 +50,31 @@ test.cb('Syncer lifecycle methods are called in right order', t => {
 	Vue.$syncer.driver = TestSyncer
 
 	const instance = new Vue({
-		beforeCreate: function () {
+		beforeCreate() {
 			t.is(order++, 1, 'Vue instance created')
 		},
 
-		created: function () {
-			// no ready in node mode
+		created() {
+			// No ready in node mode
 			t.is(order++, 3, 'Vue instance is ready')
 
-			Vue.nextTick(function () {
+			Vue.nextTick(() => {
 				instance.$destroy()
 			})
 		},
 
-		beforeDestroy: function () {
+		beforeDestroy() {
 			t.is(order++, 5, 'Vue instance being destroyed')
 		},
 
-		destroyed: function () {
+		destroyed() {
 			t.is(order++, 6, 'Vue instance is destroyed')
 
-			Vue.nextTick(function () {
+			Vue.nextTick(() => {
 				// Make sure hook doesn't cause double cleanup for any weird reason
 				instance.$destroy()
 
-				Vue.nextTick(function () {
+				Vue.nextTick(() => {
 					t.end()
 				})
 			})
@@ -92,10 +92,10 @@ test.cb('Non-used instances work fine', t => {
 	t.truthy(Vue.$syncer)
 
 	const instance = new Vue({
-		destroyed: function () {
+		destroyed() {
 			t.pass()
 
-			Vue.nextTick(function () {
+			Vue.nextTick(() => {
 				t.end()
 			})
 		}

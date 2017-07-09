@@ -41,7 +41,10 @@ export default class BaseFeathersSyncer {
 		})
 
 		this.state = this._initialState()
-		this.vm = this.settings = this.Vue = this.service = null
+		this.vm = null
+		this.settings = null
+		this.Vue = null
+		this.service = null
 	}
 
 	/**

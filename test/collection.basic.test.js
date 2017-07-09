@@ -10,7 +10,7 @@ test.beforeEach(addBasicService)
 test.beforeEach(t => {
 	const Vue = t.context.Vue
 	t.context.instance = new Vue({
-		data: function () {
+		data() {
 			return {
 				// To avoid vue-warn for setting paths on vm
 				variables: {}
@@ -37,9 +37,10 @@ test('Get basic collection', async t => {
 		t.fail(error)
 	})
 
-	const syncer = t.context.syncer = createSyncer({
+	const syncer = createSyncer({
 		service: 'test'
 	})
+	t.context.syncer = syncer
 
 	t.plan(4)
 
@@ -47,7 +48,7 @@ test('Get basic collection', async t => {
 	t.truthy(syncer.loading)
 
 	instance.$once('syncer-loaded', path => {
-		// correct path
+		// Correct path
 		t.is(path, 'test')
 	})
 
@@ -64,9 +65,10 @@ test('New items are added to the instance', async t => {
 		t.fail(error)
 	})
 
-	const syncer = t.context.syncer = createSyncer({
+	const syncer = createSyncer({
 		service: 'test'
 	})
+	t.context.syncer = syncer
 
 	await syncer.ready()
 	await callService('create', {created: true})
@@ -81,9 +83,10 @@ test('Current items are updated on the instance', async t => {
 		t.fail(error)
 	})
 
-	const syncer = t.context.syncer = createSyncer({
+	const syncer = createSyncer({
 		service: 'test'
 	})
+	t.context.syncer = syncer
 
 	await syncer.ready()
 	await callService('update', 1, {id: 1, updated: true})
@@ -98,9 +101,10 @@ test('Current items are patched on the instance', async t => {
 		t.fail(error)
 	})
 
-	const syncer = t.context.syncer = createSyncer({
+	const syncer = createSyncer({
 		service: 'test'
 	})
+	t.context.syncer = syncer
 
 	await syncer.ready()
 	await callService('patch', 1, {id: 1, updated: true})
@@ -115,9 +119,10 @@ test('Deleted things are removed on the instance', async t => {
 		t.fail(error)
 	})
 
-	const syncer = t.context.syncer = createSyncer({
+	const syncer = createSyncer({
 		service: 'test'
 	})
+	t.context.syncer = syncer
 
 	await syncer.ready()
 	await callService('remove', 1)
@@ -135,5 +140,6 @@ test('Handle destruction while loading', async t => {
 	const synced = syncer.ready()
 	syncer.destroy()
 	await synced
+	t.pass()
 })
 

@@ -1,8 +1,8 @@
-var path = require('path')
-var webpack = require('webpack')
+const path = require('path')
+const webpack = require('webpack')
 
 module.exports = {
-//	context: path.resolve(__dirname, './'),
+//	Context: path.resolve(__dirname, './'),
 	entry: {
 		example: ['webpack-hot-middleware/client?reload=true', './example/index.js']
 	},

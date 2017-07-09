@@ -18,7 +18,8 @@ export default function localSocketer(url) {
 
 		Proto.mixin({
 			setup() {
-				const io = this.io = new Server(url)
+				const io = new Server(url)
+				this.io = io
 
 				io.on('connection', socket => {
 					socket.feathers = {

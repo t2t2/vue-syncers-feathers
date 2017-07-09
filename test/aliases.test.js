@@ -71,7 +71,7 @@ test('Toggling aliases', t => {
 	Vue.mixin(aliasesMixinMaker({
 		loading: false,
 		refresh: true
-		// service: false is implied
+		// Service: false is implied
 	}))
 
 	const instance = new Vue({

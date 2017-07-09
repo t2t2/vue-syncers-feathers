@@ -1,16 +1,16 @@
 import {each} from './utils'
 
 const variables = {
-	loading: function () {
+	loading() {
 		return this.$loadingSyncers
 	}
 }
 
 const methods = {
-	refresh: function (...args) {
+	refresh(...args) {
 		return this.$refreshSyncers(...args)
 	},
-	service: function (...args) {
+	service(...args) {
 		return this.$feathers.service(...args)
 	}
 }
@@ -31,7 +31,7 @@ export default function aliasesMixinMaker(options) {
 	}
 
 	const mixin = {
-		computed: {}, // variables
+		computed: {}, // Variables
 		methods: {}
 	}
 

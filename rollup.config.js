@@ -2,7 +2,7 @@ import path from 'path'
 import babel from 'rollup-plugin-babel'
 
 /*
- if(!process.env.PROD_BUILD_MODE) {
+ If(!process.env.PROD_BUILD_MODE) {
  process.env.PROD_BUILD_MODE = 'commonjs'
  }
  */

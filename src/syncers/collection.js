@@ -146,13 +146,13 @@ export default class CollectionSyncer extends BaseSyncer {
 
 		return this.service.find(params).then(items => {
 			if (this.vm === null) {
-				// destroy has been called during loading
+				// Destroy has been called during loading
 				return items
 			}
 
 			this.state = this._initialState()
 
-			// if the service is paginated
+			// If the service is paginated
 			if (Array.isArray(items) === false && typeof items.data !== 'undefined') {
 				items = items.data
 			}
