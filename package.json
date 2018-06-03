@@ -55,7 +55,7 @@
     "css-loader": "^0.28.0",
     "feathers": "^2.1.4",
     "feathers-commons": "^0.8.7",
-    "feathers-memory": "^1.0.1",
+    "feathers-memory": "^2.1.2",
     "feathers-query-filters": "^2.1.1",
     "feathers-rest": "^1.8.0",
     "feathers-socket-commons": "^2.3.1",
