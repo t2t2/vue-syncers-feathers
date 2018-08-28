@@ -67,7 +67,7 @@
     "nyc": "^11.0.3",
     "rimraf": "^2.5.4",
     "rollup": "^0.47.0",
-    "rollup-plugin-babel": "^3.0.0",
+    "rollup-plugin-babel": "^4.0.2",
     "socket.io-client": "^2.0.3",
     "uberproto": "^1.2.0",
     "vue": "^2.3.4",
