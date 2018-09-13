@@ -78,7 +78,7 @@
     "vue-template-compiler": "^2.3.4",
     "webpack": "^3.1.0",
     "webpack-dev-middleware": "^1.11.0",
-    "webpack-hot-middleware": "^2.18.2",
+    "webpack-hot-middleware": "^2.24.0",
     "xo": "^0.18.2"
   },
   "ava": {
